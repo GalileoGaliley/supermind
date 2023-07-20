@@ -1,23 +1,54 @@
 import React, {useRef, useEffect} from 'react';
-import {StyleSheet, View, Text, Animated} from 'react-native';
+import {StyleSheet, View, Text, Animated, Dimensions} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 type OwnProps = {
   title: string;
   firstPrompt: string;
   secondPrompt: string;
-  icon: string;
+  firstEmoji: string;
+  secondEmoji: string;
   start: number;
+  index: number;
 };
-export default ({firstPrompt, secondPrompt, icon, title, start}: OwnProps) => {
-  const translateXAnim = useRef(new Animated.Value(start)).current;
+
+const {width} = Dimensions.get('window');
+export default ({
+  firstPrompt,
+  secondPrompt,
+  firstEmoji,
+  secondEmoji,
+  title,
+  index,
+  start,
+}: OwnProps) => {
+  const translateXFirstMessage = useRef(new Animated.Value(start)).current;
+  const translateXSecondMessage = useRef(
+    new Animated.Value(-start + width / 2),
+  ).current;
 
   useEffect(() => {
-    Animated.timing(translateXAnim, {
+    Animated.timing(translateXFirstMessage, {
       toValue: 0,
-      duration: 500,
+      duration: 1000 + index * 300,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(translateXSecondMessage, {
+      toValue: width / 2 - 33,
+      duration: 1000 + index * 300,
       useNativeDriver: true,
     }).start();
   }, []);
+
+  const firstColors =
+    index % 2 === 0
+      ? ['rgba(13, 77, 114, 0.7)', 'rgba(37, 137, 83, 0.7)']
+      : ['rgba(101, 14, 141, 0.7)', 'rgba(37, 83, 137, 0.7)'];
+
+  const secondColors =
+    index % 2 !== 0
+      ? ['rgba(13, 77, 114, 0.7)', 'rgba(37, 137, 83, 0.7)']
+      : ['rgba(101, 14, 141, 0.7)', 'rgba(37, 83, 137, 0.7)'];
 
   return (
     <View>
@@ -27,10 +58,33 @@ export default ({firstPrompt, secondPrompt, icon, title, start}: OwnProps) => {
         <View style={styles.line} />
       </View>
       <Animated.View
-        style={[styles.box, {transform: [{translateX: translateXAnim}]}]}>
-        <Text>
-          Hello worldlkxnvkkladjfnvlsknvmkaaaaaaaaaaaaaaakjdfnakjsdnaa
-        </Text>
+        style={[
+          styles.box,
+          {transform: [{translateX: translateXFirstMessage}], top: 30},
+        ]}>
+        <LinearGradient
+          colors={firstColors}
+          start={{x: 0.0887, y: 0.2941}}
+          end={{x: 0.96, y: 0.9394}}
+          style={styles.gradient}>
+          <Text style={styles.text}>{firstPrompt}</Text>
+          <Text style={styles.icon}>{firstEmoji}</Text>
+        </LinearGradient>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.box,
+          {transform: [{translateX: translateXSecondMessage}]},
+        ]}>
+        <LinearGradient
+          colors={secondColors}
+          start={{x: 0.0887, y: 0.2941}}
+          end={{x: 0.96, y: 0.9394}}
+          locations={[-0.2692, 0.9263]}
+          style={styles.gradient}>
+          <Text style={styles.text}>{secondPrompt}</Text>
+          <Text style={styles.icon}>{secondEmoji}</Text>
+        </LinearGradient>
       </Animated.View>
     </View>
   );
@@ -38,9 +92,31 @@ export default ({firstPrompt, secondPrompt, icon, title, start}: OwnProps) => {
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: 'lightblue',
-    padding: 20,
     borderRadius: 10,
+    width: width / 2.2865853658536,
+  },
+  gradient: {
+    minHeight: 60,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    border: '10px solid',
+  },
+  icon: {
+    position: 'absolute',
+    fontSize: 28,
+    left: 15,
+    top: -24,
+    opacity: 1,
+    color: '#fff',
+  },
+  text: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: '400',
   },
   messageContainer: {
     backgroundColor: 'transparent',

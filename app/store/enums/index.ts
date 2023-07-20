@@ -5,6 +5,30 @@ enum SliceNames {
   PRESETS = 'PRESETS',
 }
 
+export const promptsList = [
+  {
+    title: 'Creativity',
+    firstEmoji: '🎨',
+    secondEmoji: '🎙️',
+    firstPrompt: 'Generate atr',
+    secondPrompt: 'Write song',
+  },
+  {
+    title: 'Education & Work',
+    firstEmoji: '📩',
+    secondEmoji: '✍🏼',
+    firstPrompt: 'Draft an email',
+    secondPrompt: 'Draft an essay',
+  },
+  {
+    title: 'Health',
+    firstEmoji: '🏋',
+    secondEmoji: '🍲',
+    firstPrompt: 'Create a fitness program',
+    secondPrompt: 'Create a meal plan',
+  },
+];
+
 enum HttpStatusCode {
   CONTINUE = 100,
   SWITCHING_PROTOCOLS = 101,

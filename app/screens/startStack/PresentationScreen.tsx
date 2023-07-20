@@ -4,14 +4,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import {RootStackParamsList} from '../../navigation/types';
-// @ts-ignore
+
 import Button from '../../components/button';
 import PresentationPrompts from '../../components/presentationPrompts';
+
 import Chevron from '../../assets/images/icons/Chevron';
+import LinesBack from '../../assets/images/icons/LinesBack';
 
 const {width, height} = Dimensions.get('window');
 
-const GreetingScreen = () => {
+const PresentationScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
 
   const press = () => {
@@ -33,6 +35,9 @@ const GreetingScreen = () => {
       </View>
       <View style={styles.next}>
         <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
+      </View>
+      <View style={styles.back}>
+        <LinesBack />
       </View>
     </View>
   );
@@ -105,6 +110,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  back: {
+    width: width * 1.5,
+    height: width * 1.5,
+    position: 'absolute',
+    top: width / 2.5,
+    right: -50,
+    zIndex: -2,
+  },
 });
 
-export default GreetingScreen;
+export default PresentationScreen;
