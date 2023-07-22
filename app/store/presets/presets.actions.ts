@@ -3,9 +3,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {SliceNames} from '../enums';
 import type {ThunkAsyncConfig} from '../types';
 
-import {PresetsData} from './presets.types';
+import {Presets} from './presets.types';
 
-const getPresetsAction = createAsyncThunk<PresetsData, void, ThunkAsyncConfig>(
+const getPresetsAction = createAsyncThunk<Presets[], void, ThunkAsyncConfig>(
   `${SliceNames.PRESETS}/getPresetsAction`,
   async (
     _,

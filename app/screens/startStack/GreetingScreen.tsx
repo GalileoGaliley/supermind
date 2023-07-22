@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 
 import {RootStackParamsList} from '../../navigation/types';
@@ -32,30 +33,37 @@ const GreetingScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.titleContainer}>
-        <View>
-          <Text style={styles.title}>Hi! I am Supermind, your AI</Text>
-          <Text style={styles.title}>based assistant!</Text>
+      <LinearGradient
+        colors={['#16171D', '#16171D', 'transparent', '#16171D', '#16171D']}
+        style={styles.gradient}
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 1}}
+        locations={[0, 0.1, 0.5, 0.9, 1]}>
+        <View style={styles.titleContainer}>
+          <View>
+            <Text style={styles.title}>Hi! I am Supermind, your AI</Text>
+            <Text style={styles.title}>based assistant!</Text>
+          </View>
+          <View>
+            <Text style={styles.subTitle}>
+              I'll answer any questions you have!
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.subTitle}>
-            I'll answer any questions you have!
-          </Text>
+        <View style={styles.next}>
+          <PoweredByIc />
+          <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
         </View>
-      </View>
-      <View style={styles.next}>
-        <PoweredByIc />
-        <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
-      </View>
-      <View style={styles.videoContainer}>
-        <Video
-          style={styles.video}
-          playInBackground={true}
-          resizeMode="cover"
-          source={robot}
-          repeat={true}
-        />
-      </View>
+        <View style={styles.videoContainer}>
+          <Video
+            style={styles.video}
+            playInBackground={true}
+            resizeMode="cover"
+            source={robot}
+            repeat={true}
+          />
+        </View>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -64,11 +72,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#16171d',
-    paddingTop: 22,
   },
   titleContainer: {
     width: '100%',
@@ -115,6 +118,15 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  gradient: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#16171d',
+    paddingTop: 42,
+    height: height,
   },
 });
 

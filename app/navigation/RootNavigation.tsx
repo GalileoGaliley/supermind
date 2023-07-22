@@ -13,6 +13,7 @@ import {rubikBold} from '../style/font';
 
 import StartNavigation from './StartNavigation';
 import {RootStackParamsList} from './types';
+import TabNavigation from "./TabNavigation";
 
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
@@ -26,19 +27,15 @@ const RootNavigation = () => {
   const token = useUserToken();
 
   useEffect(() => {
-    console.log(
-      'token?',
-      token ? `вот${token}` : `а нету токена братан! Только ${token}`,
-    );
     const data = {
-      key: '123',
-      uuid: '24123131',
+      key: 'yYbW0NpF4HKDarHuyjNGPEn7updjR5g',
+      uuid: 'test1111',
     };
     if (!token) {
       dispatch(fetchSignInAction(data));
       return;
     }
-  }, [token]);
+  }, []);
 
   const rootOptions: StackNavigationOptions = {
     headerShown: false,
@@ -61,7 +58,12 @@ const RootNavigation = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator screenOptions={rootOptions} initialRouteName="Start">
+      <RootStack.Navigator screenOptions={rootOptions} initialRouteName="Tabs">
+        <RootStack.Screen
+          name="Tabs"
+          component={TabNavigation}
+          options={tabsOptions}
+        />
         <RootStack.Screen
           name="Start"
           component={StartNavigation}

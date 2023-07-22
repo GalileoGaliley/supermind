@@ -6,6 +6,7 @@ import React from 'react';
 // import {useUserToken} from 'store/user/user.selectors';
 import GreetingScreen from '../screens/startStack/GreetingScreen';
 import PresentationScreen from '../screens/startStack/PresentationScreen';
+import PresentationMessagingScreen from "../screens/startStack/PresentationMessagingScreen";
 
 const StartNavigation = () => {
   const StartStack = createStackNavigator<StartTabsParamsList>();
@@ -31,7 +32,12 @@ const StartNavigation = () => {
       screenOptions={params =>
         getBaseNavigatorOptions({
           navigatorParams: params,
-          routeNames: ['GreetingScreen', 'PresentationScreen'],
+          routeNames: [
+            'GreetingScreen',
+            'PresentationScreen',
+            'PresentationMessagingScreen',
+            'SecondPresentationMessagingScreen',
+          ],
         })
       }>
       <StartStack.Screen
@@ -43,6 +49,16 @@ const StartNavigation = () => {
         options={{headerShown: false}}
         name="PresentationScreen"
         component={PresentationScreen}
+      />
+      <StartStack.Screen
+        options={{headerShown: false}}
+        name="PresentationMessagingScreen"
+        component={PresentationMessagingScreen}
+      />
+      <StartStack.Screen
+        options={{headerShown: false}}
+        name="SecondPresentationMessagingScreen"
+        component={PresentationMessagingScreen}
       />
     </StartStack.Navigator>
   );

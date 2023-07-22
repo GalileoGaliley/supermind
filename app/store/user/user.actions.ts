@@ -16,7 +16,11 @@ const fetchSignInAction = createAsyncThunk<User, UserReqData, ThunkAsyncConfig>(
     },
   ) => {
     try {
+      console.log('token12');
+
       const userData = await fetchAuthService(data);
+      console.log(userData);
+      console.log('userData');
       return userData;
     } catch (error) {
       return Promise.reject(error);

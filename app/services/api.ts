@@ -16,8 +16,12 @@ axiosInstance.interceptors.request.use(
         user: {token},
       },
     } = getState();
-
-    const authHeader = token ? {Authorization: `Bearer ${token}`} : {};
+    console.log(token);
+    const authHeader = token
+      ? {
+          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInRva2VuSWQiOiIzNGJhZWVmNy1lYmE3LTQzNWEtYWRjNy0wOGFlOGZiMmM4MjIiLCJpYXQiOjE2ODUxMDYwNDR9.ld0_y6TGQQ14yRhcAxJx42Ov5Pn8BeVtI-W4UxWsOb4'}`,
+        }
+      : {};
 
     return {
       ...request,

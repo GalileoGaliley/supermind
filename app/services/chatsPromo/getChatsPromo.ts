@@ -7,8 +7,10 @@ const {
 } = endpoints;
 
 const fetchChatPromo = async (): Promise<ChatPromptList> => {
+  console.log(1);
   try {
     const {data: chat} = await axios.get(chatUrl);
+    console.log(chat);
     return chat;
   } catch (error) {
     return Promise.reject(error);

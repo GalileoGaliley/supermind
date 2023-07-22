@@ -7,6 +7,7 @@ type OwnProps = {
   title: string;
   Icon?: JSX.Element;
 };
+
 export default ({onPress, title, Icon}: OwnProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   buttonTitle: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 23,
+    fontSize: 20,
   },
   gradient: {
     width: '100%',

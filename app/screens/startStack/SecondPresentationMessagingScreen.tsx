@@ -1,45 +1,49 @@
-import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import {RootStackParamsList} from '../../navigation/types';
-
+// @ts-ignore
+import chat from '../../../app/assets/videos/8_2.mp4';
+// @ts-ignore
 import Button from '../../components/button';
-import PresentationPrompts from '../../components/presentationPrompts';
-
 import Chevron from '../../assets/images/icons/Chevron';
-import LinesBack from '../../assets/images/icons/LinesBack';
 
 const {width, height} = Dimensions.get('window');
 
-const PresentationScreen = () => {
+const SecondPresentationMessagingScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
+  const videoRef = useRef<Video>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.seek(0);
+      // @ts-ignore
+      videoRef.current.play();
+    }
+  }, []);
 
   const press = () => {
-    navigation.navigate('PresentationMessagingScreen', undefined);
+    navigation.navigate('PresentationScreen', undefined);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <View>
-          <Text style={styles.title}>What can I do?</Text>
-        </View>
-        <View>
-          <Text style={styles.subTitle}>“Whatever you want!”</Text>
-        </View>
-      </View>
-      <View style={styles.prompts}>
-        <PresentationPrompts />
-      </View>
+    <SafeAreaView style={styles.container}>
       <View style={styles.next}>
         <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
       </View>
-      <View style={styles.back}>
-        <LinesBack />
+      <View style={styles.videoContainer}>
+        <Video
+          style={styles.video}
+          playInBackground={true}
+          resizeMode="cover"
+          source={chat}
+          repeat={true}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -48,21 +52,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: '#16171d',
     paddingTop: 42,
-
-    shadowColor: '#000000',
-    shadowOffset: {width: 5000, height: 5003},
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  prompts: {
-    width: width,
-    alignItems: 'center',
-    paddingHorizontal: 30,
   },
   titleContainer: {
     width: '100%',
@@ -110,14 +103,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  back: {
-    width: width * 1.5,
-    height: width * 1.5,
-    position: 'absolute',
-    top: width / 2.5,
-    right: -50,
-    zIndex: -2,
-  },
 });
 
-export default PresentationScreen;
+export default SecondPresentationMessagingScreen;

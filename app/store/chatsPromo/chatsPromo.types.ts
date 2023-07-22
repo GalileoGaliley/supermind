@@ -22,4 +22,4 @@ type ChatPromptState = {
   loading: boolean;
 };
 
-export {ChatPromoItem, ChatPromptItem, ChatPromptList, ChatPromptState};
+export type {ChatPromoItem, ChatPromptItem, ChatPromptList, ChatPromptState};

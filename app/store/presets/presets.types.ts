@@ -10,11 +10,14 @@ type Presets = {
   presets: Preset[];
 };
 
-type PresetsData = Presets[];
+type PresetsData = {
+  [key: string]: Preset[];
+};
 
 type PresetsState = {
   presets: PresetsData;
+  titles: string[];
   loading: boolean;
 };
 
-export {PresetsData, Presets, Preset, PresetsState};
+export type {PresetsData, Presets, Preset, PresetsState};
