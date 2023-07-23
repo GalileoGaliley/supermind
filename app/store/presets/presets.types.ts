@@ -11,12 +11,15 @@ type Presets = {
 };
 
 type PresetsData = {
-  [key: string]: Preset[];
+  [key: string]: number[];
 };
 
 type PresetsState = {
   presets: PresetsData;
   titles: string[];
+  items: {
+    [key: number]: Preset;
+  };
   loading: boolean;
 };
 

@@ -1,5 +1,7 @@
 import {useAppSelector} from '../hooks/useAppSelector';
 
-const usePresets = () => useAppSelector(state => state.presets.presets);
+const usePresetsIds = () => useAppSelector(state => state.presets.presets);
+const usePresetsItems = () => useAppSelector(state => state.presets.items);
+const usePresetsTitles = () => useAppSelector(state => state.presets.titles);
 
-export {usePresets};
+export {usePresetsItems, usePresetsIds, usePresetsTitles};

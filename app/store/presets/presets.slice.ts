@@ -3,11 +3,12 @@ import {createSlice} from '@reduxjs/toolkit';
 import {SliceNames} from '../enums';
 
 import {getPresetsAction} from './presets.actions';
-import {PresetsData, PresetsState} from './presets.types';
+import {Preset, Presets, PresetsData, PresetsState} from './presets.types';
 
 const initialState: PresetsState = {
   presets: {},
   titles: [],
+  items: {},
   loading: false,
 };
 
@@ -18,15 +19,28 @@ const presetsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getPresetsAction.fulfilled, (state, {payload}) => {
-        const titles: string[] = [];
+        const titles: string[] = ['All'];
+        const items: {[p: number]: Preset} = {};
 
-        const normalized = payload.reduce((acc, item) => {
-          acc[item.title] = item.presets;
-          titles.push(item.title);
-          return acc;
-        }, {} as PresetsData);
-
-        state.presets = normalized;
+        const normalizedIds = payload.reduce(
+          (acc, item) => {
+            item.presets.forEach(presetItem => {
+              items[presetItem.id] = presetItem;
+              if (acc[item.title]) {
+                acc[item.title].push(presetItem.id);
+              } else {
+                acc[item.title] = [presetItem.id];
+              }
+              acc.All.push(presetItem.id);
+            });
+            titles.push(item.title);
+            return acc;
+          },
+          {All: []} as PresetsData,
+        );
+        state.items = items;
+        state.titles = titles;
+        state.presets = normalizedIds;
         state.loading = false;
       })
       .addCase(getPresetsAction.pending, state => {

@@ -19,7 +19,7 @@ import type {
 import ChatPromptsIcon from '../assets/images/icons/ChatPromptsIcon';
 import PresetsIcon from '../assets/images/icons/PresetsIcon';
 import {StyleSheet} from 'react-native';
-import ChatPresetsScreen from '../screens/chatStack/ChatPresetsScreen';
+import ChatPresetsScreen from '../screens/chatStack/ChatPresetsScreen/ChatPresetsScreen';
 
 const TabNavigation = () => {
   const BottomTab = createBottomTabNavigator<BottomTabsParamsList>();
@@ -65,7 +65,7 @@ const TabNavigation = () => {
   const tabPresetsOptions: BottomTabNavigationOptions = {
     tabBarLabel: 'Tasks fo AI',
     tabBarIcon: ({focused}) => <PresetsIcon active={focused} />,
-    title: 'Chat',
+    title: 'Tasks fo AI',
     ...generalTabsOptions,
   };
 

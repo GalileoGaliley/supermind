@@ -14,6 +14,7 @@ const PromptsList = ({chatsPrompt, id}: OwnProps) => {
             title={item.title}
             desc={item.desc}
             prompt={item.prompt}
+            mr={0}
           />
         );
       })}
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexWrap: 'wrap',
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 export default PromptsList;
