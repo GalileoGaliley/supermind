@@ -7,18 +7,21 @@ export type BottomTabsParamsList = {
 
 export type RootStackParamsList = {
   Start: undefined;
-  GreetingScreen: undefined;
-  PresentationScreen: undefined;
-  PresentationMessagingScreen: undefined;
-  SecondPresentationMessagingScreen: undefined;
+  Custom: undefined;
   Tabs: undefined;
-} & BottomTabsParamsList;
+} & BottomTabsParamsList &
+  StartTabsParamsList &
+  CustomStackParamsList;
 
 export type StartTabsParamsList = {
   GreetingScreen: undefined;
   PresentationScreen: undefined;
   PresentationMessagingScreen: undefined;
   SecondPresentationMessagingScreen: undefined;
+};
+
+export type CustomStackParamsList = {
+  SettingsScreen: undefined;
 };
 
 type StackScreenOptions = {

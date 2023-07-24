@@ -26,7 +26,7 @@ const SecondPresentationMessagingScreen = () => {
   }, []);
 
   const press = () => {
-    navigation.navigate('PresentationScreen', undefined);
+    navigation.navigate('Tabs', undefined);
   };
 
   return (

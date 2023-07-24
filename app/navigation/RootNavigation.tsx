@@ -1,19 +1,24 @@
 import {
   NavigationContainer,
   NavigationContainerRef,
+  useNavigation,
 } from '@react-navigation/native';
 import type {StackNavigationOptions} from '@react-navigation/stack';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+} from '@react-navigation/stack';
 import React, {createRef, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {fetchSignInAction} from '../store/user/user.actions';
 import {useUserToken} from '../store/user/user.selectors';
-import {rubikBold} from '../style/font';
 
 import StartNavigation from './StartNavigation';
 import {RootStackParamsList} from './types';
-import TabNavigation from "./TabNavigation";
+import TabNavigation from './TabNavigation';
+import SettingsScreen from '../screens/CustomStack/SettingsScreen';
+import {StyleSheet} from 'react-native';
+import BackButton from '../components/header/components/BackButton';
 
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
@@ -37,41 +42,51 @@ const RootNavigation = () => {
     }
   }, []);
 
-  const rootOptions: StackNavigationOptions = {
+  // const rootOptions: StackNavigationOptions = {
+  //   // headerShown: false,
+  //   headerTitleAlign: 'center',
+  // };
+
+  const navOptions: StackNavigationOptions = {
     headerShown: false,
+  };
+
+  const settingsOptions: Partial<StackNavigationOptions> = {
+    title: 'Settings',
+    headerTransparent: true,
     headerTitleAlign: 'center',
-    headerTitleStyle: {
-      fontFamily: rubikBold,
-      textTransform: 'uppercase',
-      fontSize: 16,
-    },
+    headerTitleStyle: styles.screenTitle,
+    headerLeft: () => <BackButton />,
   };
-
-  const tabsOptions: StackNavigationOptions = {
-    headerShown: false,
-  };
-  // useFirebase();
-
-  // useOpenNotification();
-
-  // onNotificationOpenedApp();
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator screenOptions={rootOptions} initialRouteName="Tabs">
+      <RootStack.Navigator initialRouteName="Tabs">
         <RootStack.Screen
           name="Tabs"
           component={TabNavigation}
-          options={tabsOptions}
+          options={navOptions}
         />
         <RootStack.Screen
           name="Start"
           component={StartNavigation}
-          options={tabsOptions}
+          options={navOptions}
+        />
+        <RootStack.Screen
+          name="SettingsScreen"
+          component={SettingsScreen}
+          options={settingsOptions}
         />
       </RootStack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  screenTitle: {
+    fontSize: 20,
+    color: '#fff',
+  },
+});
 
 export default RootNavigation;

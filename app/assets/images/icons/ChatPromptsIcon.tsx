@@ -16,7 +16,7 @@ const ChatPromptsIcon = ({active = false}: IconType) => {
           colors={['rgba(13, 77, 114, 0.7)', 'rgba(37, 137, 83, 0.7)']}
           style={styles.gradient}
           start={{x: 0, y: 0}}
-          end={{x: 10, y: 5}}
+          end={{x: 1, y: 1}}
         />
       ) : null}
       <Svg width="19" height="20" viewBox="0 0 19 20" fill="none">
@@ -43,17 +43,17 @@ const ChatPromptsIcon = ({active = false}: IconType) => {
 
 const styles = StyleSheet.create({
   iconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#23232D',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#23232D',
-    width: 30,
-    borderRadius: 10,
-    height: 30,
+    borderRadius: 15,
   },
   gradient: {
-    width: 30,
-    borderRadius: 10,
-    height: 30,
+    width: '100%',
+    borderRadius: 15,
+    height: '100%',
     position: 'absolute',
     flexDirection: 'column',
     justifyContent: 'space-between',

@@ -7,6 +7,7 @@ import React from 'react';
 import GreetingScreen from '../screens/startStack/GreetingScreen';
 import PresentationScreen from '../screens/startStack/PresentationScreen';
 import PresentationMessagingScreen from "../screens/startStack/PresentationMessagingScreen";
+import SecondPresentationMessagingScreen from "../screens/startStack/SecondPresentationMessagingScreen";
 
 const StartNavigation = () => {
   const StartStack = createStackNavigator<StartTabsParamsList>();
@@ -58,7 +59,7 @@ const StartNavigation = () => {
       <StartStack.Screen
         options={{headerShown: false}}
         name="SecondPresentationMessagingScreen"
-        component={PresentationMessagingScreen}
+        component={SecondPresentationMessagingScreen}
       />
     </StartStack.Navigator>
   );
