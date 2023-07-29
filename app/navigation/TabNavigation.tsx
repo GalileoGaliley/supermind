@@ -60,8 +60,12 @@ const TabNavigation = () => {
     tabBarActiveTintColor: '#69737B',
   };
 
-  const pressHistoryButton = () => {
+  const pressSettingButton = () => {
     navigation.navigate('SettingsScreen', undefined);
+  };
+
+  const pressHistoryButton = () => {
+    navigation.navigate('HistoryScreen', undefined);
   };
 
   const tabPromptsOptions: BottomTabNavigationOptions = {
@@ -76,7 +80,7 @@ const TabNavigation = () => {
     ),
     headerRight: () => (
       <HeaderButton
-        callback={pressHistoryButton}
+        callback={pressSettingButton}
         Icon={<GearIcon fill={'#fff'} />}
       />
     ),

@@ -1,12 +1,9 @@
 import {
   NavigationContainer,
   NavigationContainerRef,
-  useNavigation,
 } from '@react-navigation/native';
 import type {StackNavigationOptions} from '@react-navigation/stack';
-import {
-  createStackNavigator,
-} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import React, {createRef, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
@@ -19,6 +16,8 @@ import TabNavigation from './TabNavigation';
 import SettingsScreen from '../screens/CustomStack/SettingsScreen';
 import {StyleSheet} from 'react-native';
 import BackButton from '../components/header/components/BackButton';
+import ChatNavigation from './ChatNavigation';
+import HistoryScreen from "../screens/chatStack/HistoryScreen/HistoryScreen";
 
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
@@ -59,6 +58,14 @@ const RootNavigation = () => {
     headerLeft: () => <BackButton />,
   };
 
+  const historyOptions: Partial<StackNavigationOptions> = {
+    title: 'History',
+    headerTransparent: true,
+    headerTitleAlign: 'center',
+    headerTitleStyle: styles.screenTitle,
+    headerLeft: () => <BackButton />,
+  };
+
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator initialRouteName="Tabs">
@@ -76,6 +83,11 @@ const RootNavigation = () => {
           name="SettingsScreen"
           component={SettingsScreen}
           options={settingsOptions}
+        />
+        <RootStack.Screen
+          options={historyOptions}
+          name="HistoryScreen"
+          component={HistoryScreen}
         />
       </RootStack.Navigator>
     </NavigationContainer>

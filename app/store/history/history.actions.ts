@@ -23,4 +23,22 @@ const getHistoryAction = createAsyncThunk<History, void, ThunkAsyncConfig>(
   },
 );
 
-export {getHistoryAction};
+const deleteHistoryAction = createAsyncThunk<void, number, ThunkAsyncConfig>(
+  `${SliceNames.HISTORY}/getHistoryAction`,
+  async (
+    id,
+    {
+      extra: {
+        historyServices: {deleteHistoryService},
+      },
+    },
+  ) => {
+    try {
+      await deleteHistoryService(id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+);
+
+export {getHistoryAction, deleteHistoryAction};

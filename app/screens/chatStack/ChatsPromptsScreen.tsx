@@ -7,6 +7,7 @@ import {fetchChatPromoAction} from '../../store/chatsPromo/chatsPromo.actions';
 import {usePrompts} from '../../store/chatsPromo/chatsPromo.selectors';
 import {useUserToken} from '../../store/user/user.selectors';
 import PromptList from '../../components/Tiles/PromptList';
+import ChatInput from '../../components/ChatInput/ChatInput';
 
 const {width, height} = Dimensions.get('window');
 
@@ -24,38 +25,41 @@ const ChatsPromptsScreen = () => {
   }, [token]);
 
   return (
-    <ScrollView style={styles.container}>
-      {chatsPrompts.length ? (
-        <React.Fragment key={chatsPrompts[0].id}>
-          <Text style={styles.listTitle}>{chatsPrompts[0].title}</Text>
-          <PromptsScroll
-            updated_at={chatsPrompts[0].updated_at}
-            created_at={chatsPrompts[0].created_at}
-            chatsPrompt={chatsPrompts[0].chatsPrompt}
-            title={chatsPrompts[0].title}
-            id={1}
-          />
-        </React.Fragment>
-      ) : null}
-      {chatsPrompts.length
-        ? chatsPrompts.slice(1).map(item => {
-            console.log(item.title);
-            return (
-              <React.Fragment key={item.id}>
-                <Text style={styles.listTitle}>{item.title}</Text>
-                <PromptList
-                  id={item.id}
-                  title={item.title}
-                  created_at={item.created_at}
-                  updated_at={item.created_at}
-                  chatsPrompt={item.chatsPrompt}
-                />
-              </React.Fragment>
-            );
-          })
-        : null}
-      <View style={styles.holder} />
-    </ScrollView>
+    <View>
+      <ScrollView style={styles.container}>
+        {chatsPrompts.length ? (
+          <React.Fragment key={chatsPrompts[0].id}>
+            <Text style={styles.listTitle}>{chatsPrompts[0].title}</Text>
+            <PromptsScroll
+              updated_at={chatsPrompts[0].updated_at}
+              created_at={chatsPrompts[0].created_at}
+              chatsPrompt={chatsPrompts[0].chatsPrompt}
+              title={chatsPrompts[0].title}
+              id={1}
+            />
+          </React.Fragment>
+        ) : null}
+        {chatsPrompts
+          ? chatsPrompts.slice(1).map(item => {
+              console.log(item.title);
+              return (
+                <React.Fragment key={item.id}>
+                  <Text style={styles.listTitle}>{item.title}</Text>
+                  <PromptList
+                    id={item.id}
+                    title={item.title}
+                    created_at={item.created_at}
+                    updated_at={item.created_at}
+                    chatsPrompt={item.chatsPrompt}
+                  />
+                </React.Fragment>
+              );
+            })
+          : null}
+        <View style={styles.holder} />
+      </ScrollView>
+      <ChatInput />
+    </View>
   );
 };
 

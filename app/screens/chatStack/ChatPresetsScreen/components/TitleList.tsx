@@ -20,7 +20,7 @@ const TitleList = ({titles, selectedPreset, setSelectedPreset}: OwnProps) => {
       horizontal={true}
       style={styles.selectorContainer}>
       <View style={styles.selector}>
-        {titles.length
+        {titles
           ? titles.map(item => {
               return (
                 <TouchableOpacity onPress={() => setSelectedPreset(item)}>
