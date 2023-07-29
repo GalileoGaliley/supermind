@@ -8,7 +8,6 @@ import {RootStackParamsList} from '../../navigation/types';
 // @ts-ignore
 import chat from '../../../app/assets/videos/8_1.mp4';
 // @ts-ignore
-import PoweredByIc from '../../assets/images/icons/PoweredBy';
 import Button from '../../components/button';
 import Chevron from '../../assets/images/icons/Chevron';
 

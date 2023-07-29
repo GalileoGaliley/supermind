@@ -25,7 +25,8 @@ type VoiceRecord = {
   partialResults: [];
   end: string;
 };
-const ChatInput = () => {
+
+const ChatInput = ({openModal, textFromPhoto}: {openModal: () => void, textFromPhoto: string}) => {
   const initSize = 40;
   const animatedSize = useRef(new Animated.Value(initSize)).current;
 
@@ -65,10 +66,6 @@ const ChatInput = () => {
 
   const change = (value: string) => {
     setText(value);
-  };
-
-  const openModal = () => {
-    console.log('open modal');
   };
 
   const sendMessage = () => {
@@ -127,6 +124,11 @@ const ChatInput = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (textFromPhoto.length > 0) {
+      setText(textFromPhoto);
+    }
+  }, [textFromPhoto]);
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={openModal} style={styles.clipContainer}>
@@ -191,6 +193,7 @@ const ChatInput = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    zIndex: 100,
     position: 'absolute',
     bottom: 0,
     backgroundColor: '#1C1C25',

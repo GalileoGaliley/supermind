@@ -1,5 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+
+import TextRecognition from 'react-native-text-recognition';
+import {
+  launchImageLibrary,
+  launchCamera,
+  ImageLibraryOptions,
+  CameraOptions,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
 
 import PromptsScroll from '../../components/Tiles/PromptsScroll';
 import {useDispatch} from 'react-redux';
@@ -8,6 +17,7 @@ import {usePrompts} from '../../store/chatsPromo/chatsPromo.selectors';
 import {useUserToken} from '../../store/user/user.selectors';
 import PromptList from '../../components/Tiles/PromptList';
 import ChatInput from '../../components/ChatInput/ChatInput';
+import ChatModal from '../../components/ChatInput/components/ChatModal';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,11 +28,51 @@ const ChatsPromptsScreen = () => {
 
   const chatsPrompts = usePrompts();
 
+  const [showModal, setShowModal] = useState(false);
+  const [image, setImage] = useState<ImagePickerResponse>({});
+  const [textFromPhoto, setTextFromPhoto] = useState<string>('');
+
+  const detectTextFromPhoto = async (image: string) => {
+    try {
+      const text = await TextRecognition.recognize(image, {});
+      setTextFromPhoto(text.join(' '));
+      console.log(text);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    if (image && image.assets?.length && image.assets[0].uri) {
+      console.log(image.assets[0].uri);
+      detectTextFromPhoto(image.assets[0].uri);
+    }
+  }, [image]);
+
+  const openCamera = async () => {
+    const options: CameraOptions = {
+      mediaType: 'photo',
+    };
+    await launchCamera(options, result => setImage(result));
+  };
+
+  const openGallery = async () => {
+    const options: ImageLibraryOptions = {
+      selectionLimit: 1,
+      mediaType: 'photo',
+    };
+    await launchImageLibrary(options, result => setImage(result));
+  };
+
   useEffect(() => {
     if (token) {
       dispatch(fetchChatPromoAction());
     }
   }, [token]);
+
+  const openModal = () => {
+    setShowModal(!showModal);
+  };
 
   return (
     <View>
@@ -58,7 +108,12 @@ const ChatsPromptsScreen = () => {
           : null}
         <View style={styles.holder} />
       </ScrollView>
-      <ChatInput />
+      <ChatModal
+        openCamera={openCamera}
+        openGalery={openGallery}
+        show={showModal}
+      />
+      <ChatInput textFromPhoto={textFromPhoto} openModal={openModal} />
     </View>
   );
 };
