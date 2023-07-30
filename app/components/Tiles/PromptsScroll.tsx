@@ -5,6 +5,7 @@ import {ChatPromptItem} from '../../store/chatsPromo/chatsPromo.types';
 
 type OwnProps = ChatPromptItem;
 const PromptsScroll = ({chatsPrompt, id}: OwnProps) => {
+
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}

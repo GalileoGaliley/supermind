@@ -14,8 +14,12 @@ const historySlice = createSlice({
   initialState,
   name: SliceNames.CHAT,
   reducers: {
-    deleteHistoryFromList: (state, {payload}: {payload: {id: number}}) => {
-      state.history = state.history.filter(item => item.id !== payload.id);
+    deleteHistoryFromList: (state, {payload}: {payload: number}) => {
+      state.history = state.history.filter(item => {
+        if (item.id !== payload) {
+          return item;
+        }
+      });
     },
   },
   extraReducers: builder => {

@@ -1,21 +1,29 @@
-import React, {useEffect, useRef} from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
   CameraIcon,
   GalleryIcon,
   MicrophoneIcon,
 } from '../../../assets/images/icons/IconPack';
 import LinearGradient from 'react-native-linear-gradient';
+import {
+  CameraOptions,
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 type OwnProps = {
   show: boolean;
-  openCamera: () => void;
-  openGalery: () => void;
+  detectTextFromPhoto: (t: string) => void;
 };
 
-const ChatModal = ({show, openGalery, openCamera}: OwnProps) => {
+const ChatModal = ({show, detectTextFromPhoto}: OwnProps) => {
   const initPos = -100;
   const showedPos = 80;
+
+  const [image, setImage] = useState<ImagePickerResponse>({});
 
   const animatedPos = useRef(new Animated.Value(initPos)).current;
 
@@ -35,6 +43,27 @@ const ChatModal = ({show, openGalery, openCamera}: OwnProps) => {
     }
   }, [show]);
 
+  useEffect(() => {
+    if (image && image.assets?.length && image.assets[0].uri) {
+      detectTextFromPhoto(image.assets[0].uri);
+    }
+  }, [image]);
+
+  const openCamera = async () => {
+    const options: CameraOptions = {
+      mediaType: 'photo',
+    };
+    await launchCamera(options, result => setImage(result));
+  };
+
+  const openGallery = async () => {
+    const options: ImageLibraryOptions = {
+      selectionLimit: 1,
+      mediaType: 'photo',
+    };
+    await launchImageLibrary(options, result => setImage(result));
+  };
+
   return (
     <Animated.View style={[styles.modalContainer, {bottom: animatedPos}]}>
       <TouchableOpacity onPress={openCamera} style={styles.modalItem}>
@@ -49,7 +78,7 @@ const ChatModal = ({show, openGalery, openCamera}: OwnProps) => {
         </View>
         <Text style={styles.title}>Camera</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={openGalery} style={styles.modalItem}>
+      <TouchableOpacity onPress={openGallery} style={styles.modalItem}>
         <View style={styles.iconContainer}>
           <LinearGradient
             colors={['rgba(13, 77, 114, 0.7)', 'rgba(37, 137, 83, 0.7)']}

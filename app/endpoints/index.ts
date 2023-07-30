@@ -4,6 +4,9 @@ export const endpoints = {
   },
   chat: {
     chat: '/chat',
+    chatCreate: '/chat/create',
+    chatContinue: '/chat/continue',
+    chatStream: '/chat/stream',
     chatsPromo: '/chats-prompt',
   },
   history: {

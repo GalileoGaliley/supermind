@@ -24,7 +24,7 @@ const getHistoryAction = createAsyncThunk<History, void, ThunkAsyncConfig>(
 );
 
 const deleteHistoryAction = createAsyncThunk<void, number, ThunkAsyncConfig>(
-  `${SliceNames.HISTORY}/getHistoryAction`,
+  `${SliceNames.HISTORY}/deleteHistoryAction`,
   async (
     id,
     {

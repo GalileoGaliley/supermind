@@ -1,4 +1,5 @@
 import type {RouteProp} from '@react-navigation/native';
+import {Chat} from '../../store/chat/chat.types';
 
 export type BottomTabsParamsList = {
   PromptsTab: undefined;
@@ -9,7 +10,7 @@ export type RootStackParamsList = {
   Start: undefined;
   Custom: undefined;
   Tabs: undefined;
-  Chat: {names: string} | undefined;
+  ChatNavigation: {screen: string; params?: {data: Partial<Chat>}};
 } & BottomTabsParamsList &
   StartTabsParamsList &
   CustomStackParamsList &
@@ -24,6 +25,9 @@ export type StartTabsParamsList = {
 
 export type ChatStackParamsList = {
   HistoryScreen: undefined;
+  ChatScreen: {
+    data: Partial<Chat>;
+  };
 };
 
 export type CustomStackParamsList = {

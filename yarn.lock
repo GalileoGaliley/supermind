@@ -2584,6 +2584,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+base-64@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==
+
 base64-js@^1.1.2, base64-js@^1.3.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
@@ -3776,6 +3781,18 @@ glob-parent@^6.0.2:
   integrity sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==
   dependencies:
     is-glob "^4.0.3"
+
+glob@7.0.6:
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.0.6.tgz#211bafaf49e525b8cd93260d14ab136152b3f57a"
+  integrity sha512-f8c0rE8JiCxpa52kWPAOa3ZaYEnzofDzCQLCn3Vdk0Z5OVLq3BsRFJI4S4ykpeVW6QMGBUkMeUpoEgWnMTnw5Q==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.2"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
 
 glob@^7.1.3, glob@^7.1.4:
   version "7.2.3"
@@ -5809,6 +5826,11 @@ react-native-gesture-handler@^2.4.2:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-image-picker@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-5.6.0.tgz#e7b6637dc5296cddb486106b711eb4eedabd083d"
+  integrity sha512-QHHb0qw3VXDedllrfS6SjxNG1SubnjUjIR2OH1HVbjv/IRVa3v4fI1MHbQaSNXlGopT9kL9jcnh7tbcX1z74Vg==
+
 react-native-linear-gradient@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.7.3.tgz#f77b71ed7c955e033f9cba5fc8478df57953eb27"
@@ -5832,6 +5854,11 @@ react-native-splash-screen@3.3.0:
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.3.0.tgz#3af71ed17afe50fee69590a45aec399d071ead02"
   integrity sha512-rGjt6HkoSXxMqH4SQUJ1gnPQlPJV8+J47+4yhgTIan4bVvAwJhEeJH7wWt9hXSdH4+VfwTS0GTaflj1Tw83IhA==
 
+react-native-sse@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-sse/-/react-native-sse-1.1.0.tgz#28c419f58a49d32f7f625f5862c467b3d7ac3598"
+  integrity sha512-qPhZwuVg7ry0Cw8Q2+0VH90on223obZcfB5a/2ktoD3951zWx7HXAtrqQtDfLGjv7ncSJoswd+efn2k0uoR5lw==
+
 react-native-svg@^13.10.0:
   version "13.10.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.10.0.tgz#d3c6222ea9cc1e21e2af0fd59dfbeafe7a3d0dc1"
@@ -5839,6 +5866,11 @@ react-native-svg@^13.10.0:
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
+
+react-native-text-recognition@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-text-recognition/-/react-native-text-recognition-1.0.0.tgz#86312976c26bf5f86ffe3035a5a4e403f0096a0a"
+  integrity sha512-zJ6rhpLuoW0eBRly5KcA46dQNAEIf/O9+XC+C0uU7PoAnSiGT4Owo5vMr8MU2SiPGYYlI/mZilnEjaQYwyf5bw==
 
 react-native-video@^5.2.1:
   version "5.2.1"
@@ -6152,6 +6184,14 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-fetch-blob@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/rn-fetch-blob/-/rn-fetch-blob-0.12.0.tgz#ec610d2f9b3f1065556b58ab9c106eeb256f3cba"
+  integrity sha512-+QnR7AsJ14zqpVVUbzbtAjq0iI8c9tCg49tIoKO2ezjzRunN7YL6zFSFSWZm6d+mE/l9r+OeDM3jmb2tBb2WbA==
+  dependencies:
+    base-64 "0.1.0"
+    glob "7.0.6"
 
 run-parallel@^1.1.9:
   version "1.2.0"

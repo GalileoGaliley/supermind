@@ -2,6 +2,9 @@ import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import PromptTile from '../../../../components/Tiles/PromptTile';
 import {Preset} from '../../../../store/presets/presets.types';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../../../navigation/types';
 
 type OwnProps = {
   chatsPresets: {[p: number]: Preset};
@@ -13,6 +16,21 @@ const PresetsList = ({
   chatsPresetsIds,
   selectedPreset,
 }: OwnProps) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
+
+  const onClick = (prompt: string) => {
+    navigation.navigate('ChatNavigation', {
+      screen: 'ChatScreen',
+      params: {
+        data: {
+          id: 0,
+          messages: [{content: prompt, role: 'user'}],
+          createdAt: '',
+        },
+      },
+    });
+  };
+
   return (
     <ScrollView style={styles.tileList} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -21,6 +39,7 @@ const PresetsList = ({
             chatsPresetsIds[selectedPreset].map(item => {
               return (
                 <PromptTile
+                  onClick={() => onClick(chatsPresets[item].desc)}
                   id={chatsPresets[`${item}`].id}
                   title={chatsPresets[item].title}
                   desc={chatsPresets[item].desc}
@@ -30,6 +49,7 @@ const PresetsList = ({
             })
           : null}
       </View>
+      <View style={{height: 100}} />
     </ScrollView>
   );
 };

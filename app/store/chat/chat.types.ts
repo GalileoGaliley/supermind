@@ -6,7 +6,7 @@ export type MessageItem = {
 export type Chat = {
   messages: MessageItem[];
   id: number;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type FetchChatData = {

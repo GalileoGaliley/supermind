@@ -1,14 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
-
-import TextRecognition from 'react-native-text-recognition';
-import {
-  launchImageLibrary,
-  launchCamera,
-  ImageLibraryOptions,
-  CameraOptions,
-  ImagePickerResponse,
-} from 'react-native-image-picker';
 
 import PromptsScroll from '../../components/Tiles/PromptsScroll';
 import {useDispatch} from 'react-redux';
@@ -17,52 +8,18 @@ import {usePrompts} from '../../store/chatsPromo/chatsPromo.selectors';
 import {useUserToken} from '../../store/user/user.selectors';
 import PromptList from '../../components/Tiles/PromptList';
 import ChatInput from '../../components/ChatInput/ChatInput';
-import ChatModal from '../../components/ChatInput/components/ChatModal';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../navigation/types';
 
 const {width, height} = Dimensions.get('window');
 
 const ChatsPromptsScreen = () => {
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const dispatch = useDispatch();
   const token = useUserToken();
 
   const chatsPrompts = usePrompts();
-
-  const [showModal, setShowModal] = useState(false);
-  const [image, setImage] = useState<ImagePickerResponse>({});
-  const [textFromPhoto, setTextFromPhoto] = useState<string>('');
-
-  const detectTextFromPhoto = async (image: string) => {
-    try {
-      const text = await TextRecognition.recognize(image, {});
-      setTextFromPhoto(text.join(' '));
-      console.log(text);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    if (image && image.assets?.length && image.assets[0].uri) {
-      console.log(image.assets[0].uri);
-      detectTextFromPhoto(image.assets[0].uri);
-    }
-  }, [image]);
-
-  const openCamera = async () => {
-    const options: CameraOptions = {
-      mediaType: 'photo',
-    };
-    await launchCamera(options, result => setImage(result));
-  };
-
-  const openGallery = async () => {
-    const options: ImageLibraryOptions = {
-      selectionLimit: 1,
-      mediaType: 'photo',
-    };
-    await launchImageLibrary(options, result => setImage(result));
-  };
 
   useEffect(() => {
     if (token) {
@@ -70,8 +27,15 @@ const ChatsPromptsScreen = () => {
     }
   }, [token]);
 
-  const openModal = () => {
-    setShowModal(!showModal);
+  const sendMessage = (prompt: string) => {
+    navigation.navigate('ChatNavigation', {
+      screen: 'ChatScreen',
+      params: {
+        data: {
+          messages: [{content: prompt, role: 'user'}],
+        },
+      },
+    });
   };
 
   return (
@@ -91,7 +55,6 @@ const ChatsPromptsScreen = () => {
         ) : null}
         {chatsPrompts
           ? chatsPrompts.slice(1).map(item => {
-              console.log(item.title);
               return (
                 <React.Fragment key={item.id}>
                   <Text style={styles.listTitle}>{item.title}</Text>
@@ -106,14 +69,9 @@ const ChatsPromptsScreen = () => {
               );
             })
           : null}
-        <View style={styles.holder} />
+        <View style={{height: 200}} />
       </ScrollView>
-      <ChatModal
-        openCamera={openCamera}
-        openGalery={openGallery}
-        show={showModal}
-      />
-      <ChatInput textFromPhoto={textFromPhoto} openModal={openModal} />
+      <ChatInput sendMessage={sendMessage} />
     </View>
   );
 };
@@ -127,11 +85,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
-  holder: {
-    height: 82,
-  },
   container: {
     position: 'relative',
+    height: '100%',
     backgroundColor: '#16171D',
     paddingTop: 82,
   },

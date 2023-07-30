@@ -65,7 +65,7 @@ const TabNavigation = () => {
   };
 
   const pressHistoryButton = () => {
-    navigation.navigate('HistoryScreen', undefined);
+    navigation.navigate('ChatNavigation', {screen: 'HistoryScreen'});
   };
 
   const tabPromptsOptions: BottomTabNavigationOptions = {

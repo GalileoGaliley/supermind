@@ -6,12 +6,17 @@ import {Chat} from '../../../../store/chat/chat.types';
 import {useDispatch} from 'react-redux';
 import {deleteHistoryAction} from '../../../../store/history/history.actions';
 import {deleteHistoryFromList} from '../../../../store/history/history.slice';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../../../navigation/types';
 
 type OwnProps = {
   item: Chat;
 };
 const HistoryItem = ({item}: OwnProps) => {
-  const {messages, id, createdAt} = item;
+  const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
+
+  const {messages, id, createdAt = ''} = item;
   const date = new Date(createdAt).toLocaleDateString();
   const h = new Date(createdAt).getHours();
   const m = new Date(createdAt).getMinutes();
@@ -19,9 +24,24 @@ const HistoryItem = ({item}: OwnProps) => {
   const dispatch = useDispatch();
 
   const deleteItem = () => {
-    dispatch(deleteHistoryAction(id));
-    dispatch(deleteHistoryFromList({id: id}));
+    if (id) {
+      dispatch(deleteHistoryAction(id));
+      dispatch(deleteHistoryFromList(id));
+    }
   };
+
+  const goToChat = () => {
+    navigation.navigate('ChatNavigation', {
+      screen: 'ChatScreen',
+      params: {
+        data: item,
+      },
+    });
+  };
+
+  if (messages.length === 0) {
+    return <></>;
+  }
 
   return (
     <View style={styles.container}>
@@ -29,9 +49,7 @@ const HistoryItem = ({item}: OwnProps) => {
         <View style={styles.messageItem}>
           <Text style={styles.messageText}>{messages[0].content}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.continueButton}
-          onPress={() => console.log('Continue')}>
+        <TouchableOpacity style={styles.continueButton} onPress={goToChat}>
           <Chevron />
         </TouchableOpacity>
       </View>

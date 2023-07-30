@@ -13,11 +13,12 @@ import {useUserToken} from '../store/user/user.selectors';
 import StartNavigation from './StartNavigation';
 import {RootStackParamsList} from './types';
 import TabNavigation from './TabNavigation';
-import SettingsScreen from '../screens/CustomStack/SettingsScreen';
+import SettingsScreen from '../screens/customStack/SettingsScreen';
 import {StyleSheet} from 'react-native';
 import BackButton from '../components/header/components/BackButton';
-import ChatNavigation from './ChatNavigation';
-import HistoryScreen from "../screens/chatStack/HistoryScreen/HistoryScreen";
+// import ChatNavigation from './ChatNavigation';
+import HistoryScreen from '../screens/chatStack/HistoryScreen/HistoryScreen';
+import ChatNavigation from "./ChatNavigation";
 
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
@@ -58,12 +59,11 @@ const RootNavigation = () => {
     headerLeft: () => <BackButton />,
   };
 
-  const historyOptions: Partial<StackNavigationOptions> = {
-    title: 'History',
+  const chatOptions: Partial<StackNavigationOptions> = {
     headerTransparent: true,
+    headerShown: false,
     headerTitleAlign: 'center',
     headerTitleStyle: styles.screenTitle,
-    headerLeft: () => <BackButton />,
   };
 
   return (
@@ -85,9 +85,9 @@ const RootNavigation = () => {
           options={settingsOptions}
         />
         <RootStack.Screen
-          options={historyOptions}
-          name="HistoryScreen"
-          component={HistoryScreen}
+          options={chatOptions}
+          name="ChatNavigation"
+          component={ChatNavigation}
         />
       </RootStack.Navigator>
     </NavigationContainer>
