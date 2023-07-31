@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamsList} from '../../../navigation/types';
 import ChatInput from '../../../components/ChatInput/ChatInput';
@@ -43,9 +43,6 @@ const ChatScreen = () => {
         style={styles.container}
         ref={ref}
         onContentSizeChange={() => ref.current.scrollToEnd({animated: true})}>
-        <Text>
-          {DeviceInfo.getDeviceId()}
-        </Text>
         {chat.messages.map(item => {
           return <MessageItem text={item.content} role={item.role} />;
         })}
