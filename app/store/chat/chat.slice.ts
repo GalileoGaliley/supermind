@@ -2,7 +2,13 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {SliceNames} from '../enums';
 
-import { continueChatAction, createChatAction, fetchChatAction } from "./chat.actions";
+import {
+  continueChatAction,
+  createChatAction,
+  fetchChatAction,
+  fetchChatPresetAction,
+  fetchChatPresetDataAction
+} from "./chat.actions";
 import {ChatState} from './chat.types';
 
 const initialState: ChatState = {
@@ -18,22 +24,41 @@ const chatSlice = createSlice({
   name: SliceNames.CHAT,
   reducers: {
     fillChat: (state, {payload}) => {
+      console.log(payload);
       state.chat = payload;
     },
     addMessage: (state, {payload}: {payload: string}) => {
-      state.chat.messages.push({content: payload, role: 'user'});
+      state.chat.messages.unshift({content: payload, role: 'user'});
     },
   },
   extraReducers: builder => {
     builder
       .addCase(fetchChatAction.fulfilled, (state, {payload}) => {
-        state.chat.messages.push(payload.messages[payload.messages.length - 1]);
+        function reverseArr(input: any) {
+          var ret = [];
+          for (var i = input.length - 1; i >= 0; i--) {
+            ret.push(input[i]);
+          }
+          return ret;
+        }
+        payload.messages = reverseArr(payload.messages);
+        state.chat = payload;
         state.loading = false;
       })
       .addCase(fetchChatAction.pending, state => {
         state.loading = true;
       })
       .addCase(fetchChatAction.rejected, state => {
+        state.loading = false;
+      })
+      .addCase(fetchChatPresetAction.fulfilled, (state, {payload}) => {
+        state.chat.id = payload;
+        state.loading = false;
+      })
+      .addCase(fetchChatPresetAction.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchChatPresetAction.rejected, state => {
         state.loading = false;
       })
       .addCase(createChatAction.fulfilled, (state, {payload}) => {
@@ -53,6 +78,17 @@ const chatSlice = createSlice({
         state.loading = true;
       })
       .addCase(continueChatAction.rejected, state => {
+        state.loading = false;
+      })
+      .addCase(fetchChatPresetDataAction.fulfilled, (state, {payload}) => {
+        console.log(payload);
+        state.chat = payload;
+        state.loading = false;
+      })
+      .addCase(fetchChatPresetDataAction.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchChatPresetDataAction.rejected, state => {
         state.loading = false;
       });
   },

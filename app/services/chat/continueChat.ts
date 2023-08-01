@@ -34,6 +34,7 @@ const continueChat = async (
           es.removeAllEventListeners();
           return;
         }
+        // @ts-ignore
         let payload = JSON.parse(e.data);
         let text = payload.choices[0].delta.content;
         if (text !== '\n') {

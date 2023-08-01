@@ -33,6 +33,7 @@ const ChatsPromptsScreen = () => {
       params: {
         data: {
           messages: [{content: prompt, role: 'user'}],
+          id: 0,
         },
       },
     });

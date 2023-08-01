@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import HistoryItem from './components/HistoryItem';
 import {useHistory} from '../../../store/history/history.selectors';
 import {useDispatch} from 'react-redux';

@@ -46,6 +46,52 @@ const createChatAction = createAsyncThunk<
   },
 );
 
+const fetchChatPresetAction = createAsyncThunk<
+  number,
+  {presetId: number},
+  ThunkAsyncConfig
+>(
+  `${SliceNames.CHAT}/fetchChatPresetAction`,
+  async (
+    data,
+    {
+      extra: {
+        chatServices: {fetchChatPresetService},
+      },
+    },
+  ) => {
+    try {
+      const chatId = await fetchChatPresetService(data);
+      return chatId;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+);
+
+const fetchChatPresetDataAction = createAsyncThunk<
+  Chat,
+  {presetId: number},
+  ThunkAsyncConfig
+>(
+  `${SliceNames.CHAT}/fetchChatPresetDataAction`,
+  async (
+    data,
+    {
+      extra: {
+        chatServices: {fetchChatPresetDataService},
+      },
+    },
+  ) => {
+    try {
+      const chat = await fetchChatPresetDataService(data);
+      return chat;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+);
+
 const continueChatAction = createAsyncThunk<
   {
     message: string;
@@ -72,4 +118,10 @@ const continueChatAction = createAsyncThunk<
   },
 );
 
-export {fetchChatAction, createChatAction, continueChatAction};
+export {
+  fetchChatAction,
+  createChatAction,
+  continueChatAction,
+  fetchChatPresetAction,
+  fetchChatPresetDataAction,
+};

@@ -10,7 +10,7 @@ export type Chat = {
 };
 
 export type FetchChatData = {
-  message: string;
+  message?: string;
   historyId: number;
 };
 

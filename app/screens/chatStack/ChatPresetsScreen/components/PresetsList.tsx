@@ -5,6 +5,13 @@ import {Preset} from '../../../../store/presets/presets.types';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../../navigation/types';
+import {useDispatch} from 'react-redux';
+import {
+  fetchChatAction,
+  fetchChatPresetAction,
+  fetchChatPresetDataAction,
+} from '../../../../store/chat/chat.actions';
+import {useChat} from '../../../../store/chat/chat.selectors';
 
 type OwnProps = {
   chatsPresets: {[p: number]: Preset};
@@ -17,16 +24,14 @@ const PresetsList = ({
   selectedPreset,
 }: OwnProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
-
-  const onClick = (prompt: string) => {
+  const dispatch = useDispatch();
+  const onClick = async (id: number) => {
+    const chatData = await dispatch(fetchChatPresetDataAction({presetId: id}));
     navigation.navigate('ChatNavigation', {
       screen: 'ChatScreen',
       params: {
-        data: {
-          id: 0,
-          messages: [{content: prompt, role: 'user'}],
-          createdAt: '',
-        },
+        // @ts-ignore
+        data: chatData.payload,
       },
     });
   };
@@ -39,7 +44,7 @@ const PresetsList = ({
             chatsPresetsIds[selectedPreset].map(item => {
               return (
                 <PromptTile
-                  onClick={() => onClick(chatsPresets[item].desc)}
+                  onClick={() => onClick(chatsPresets[item].id)}
                   id={chatsPresets[`${item}`].id}
                   title={chatsPresets[item].title}
                   desc={chatsPresets[item].desc}

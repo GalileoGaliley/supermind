@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import {store} from '../store';
 
-export const baseURL = 'http://192.168.0.109:3000';
+export const baseURL = 'https://jellyfish-app-b9mgf.ondigitalocean.app';
 export const tokenAPI =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInRva2VuSWQiOiJkYTkwZTQ2Zi00NDA5LTQyMmQtOWYyMC1kOTc1M2YwNmQwNzIiLCJpYXQiOjE2ODUwNDQ1NzB9.FjE-c5QG3dhG5E8E0favRodJqpOERWNeYZfsHKIVdxE';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInRva2VuSWQiOiIzNGJhZWVmNy1lYmE3LTQzNWEtYWRjNy0wOGFlOGZiMmM4MjIiLCJpYXQiOjE2ODUxMDYwNDR9.ld0_y6TGQQ14yRhcAxJx42Ov5Pn8BeVtI-W4UxWsOb4';
 
 const axiosInstance = axios.create({
   baseURL,
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
     } = getState();
     console.log(token);
     const authHeader = {
-      Authorization: `Bearer ${tokenAPI}`,
+      Authorization: tokenAPI ? `Bearer ${tokenAPI}` : '',
     };
 
     return {
