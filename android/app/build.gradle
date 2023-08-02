@@ -89,6 +89,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        production {
+            storeFile file('supermind-key.keystore')
+            storePassword 'superpass'
+            keyAlias 'supermind_alias'
+            keyPassword 'superpass'
+        }
     }
     buildTypes {
         debug {

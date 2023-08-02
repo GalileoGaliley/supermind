@@ -5,6 +5,7 @@ import {
   GalleryIcon,
   MicrophoneIcon,
 } from '../../../assets/images/icons/IconPack';
+import {BlurView} from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   CameraOptions,
@@ -90,18 +91,7 @@ const ChatModal = ({show, detectTextFromPhoto}: OwnProps) => {
         </View>
         <Text style={styles.title}>Gallery</Text>
       </TouchableOpacity>
-      <View style={styles.modalItem}>
-        <View style={styles.iconContainer}>
-          <LinearGradient
-            colors={['rgba(13, 77, 114, 0.7)', 'rgba(37, 137, 83, 0.7)']}
-            style={styles.gradient}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 1}}
-          />
-          <MicrophoneIcon opacity={1} />
-        </View>
-        <Text style={styles.title}>Microphone</Text>
-      </View>
+      <BlurView style={styles.absolute} blurType="transparent" blurRadius={3} />
     </Animated.View>
   );
 };
@@ -112,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(20, 20, 20, 0.5)',
     position: 'absolute',
     width: 150,
-    height: 150,
+    height: 130,
     backfaceVisibility: 'hidden',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
@@ -120,6 +110,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     left: 10,
     zIndex: 0,
+  },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width: 150,
+    height: 130,
+    zIndex: -1,
   },
   modalItem: {
     flexDirection: 'row',

@@ -99,7 +99,7 @@ const TabNavigation = () => {
     ),
     headerRight: () => (
       <HeaderButton
-        callback={pressHistoryButton}
+        callback={pressSettingButton}
         Icon={<GearIcon fill={'#fff'} />}
       />
     ),

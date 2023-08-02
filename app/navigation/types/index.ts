@@ -21,6 +21,7 @@ export type StartTabsParamsList = {
   PresentationScreen: undefined;
   PresentationMessagingScreen: undefined;
   SecondPresentationMessagingScreen: undefined;
+  PaymentScreen: undefined;
 };
 
 export type ChatStackParamsList = {

@@ -8,6 +8,7 @@ import GreetingScreen from '../screens/startStack/GreetingScreen';
 import PresentationScreen from '../screens/startStack/PresentationScreen';
 import PresentationMessagingScreen from "../screens/startStack/PresentationMessagingScreen";
 import SecondPresentationMessagingScreen from "../screens/startStack/SecondPresentationMessagingScreen";
+import PaymentScreen from "../screens/startStack/PaymentScreen";
 
 const StartNavigation = () => {
   const StartStack = createStackNavigator<StartTabsParamsList>();
@@ -60,6 +61,11 @@ const StartNavigation = () => {
         options={{headerShown: false}}
         name="SecondPresentationMessagingScreen"
         component={SecondPresentationMessagingScreen}
+      />
+      <StartStack.Screen
+        options={{headerShown: false}}
+        name="PaymentScreen"
+        component={PaymentScreen}
       />
     </StartStack.Navigator>
   );

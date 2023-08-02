@@ -1,19 +1,23 @@
 import React, {useEffect, useRef} from 'react';
-import {Dimensions, SafeAreaView, StyleSheet, View} from 'react-native';
+import { Animated, Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
+import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 
 import {RootStackParamsList} from '../../navigation/types';
 // @ts-ignore
-import chat from '../../../app/assets/videos/8_2.mp4';
+import robot from '../../../app/assets/videos/robot_v3.mp4';
 // @ts-ignore
+import PoweredByIc from '../../assets/images/icons/PoweredBy';
 import Button from '../../components/button';
 import Chevron from '../../assets/images/icons/Chevron';
+import PromptContainer from "../../components/presentationPrompts/components/PromptContainer";
+import PaymentPrompts from "../../components/paymentPrompts/PaymentPrompts";
 
 const {width, height} = Dimensions.get('window');
 
-const SecondPresentationMessagingScreen = () => {
+const PaymentScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const videoRef = useRef<Video>(null);
 
@@ -26,23 +30,31 @@ const SecondPresentationMessagingScreen = () => {
   }, []);
 
   const press = () => {
-    navigation.navigate('PaymentScreen', undefined);
+    navigation.navigate('Tabs', undefined);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.next}>
-        <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
-      </View>
-      <View style={styles.videoContainer}>
-        <Video
-          style={styles.video}
-          playInBackground={true}
-          resizeMode="cover"
-          source={chat}
-          repeat={true}
-        />
-      </View>
+      <LinearGradient
+        colors={['#16171D', '#16171D', 'transparent', '#16171D', '#16171D']}
+        style={styles.gradient}
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 1}}
+        locations={[0, 0.1, 0.5, 0.9, 1]}>
+        <PaymentPrompts />
+        <View style={styles.next}>
+          <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
+        </View>
+        <View style={styles.videoContainer}>
+          <Video
+            style={styles.video}
+            playInBackground={true}
+            resizeMode="cover"
+            source={robot}
+            repeat={true}
+          />
+        </View>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -51,11 +63,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: '#16171d',
-    paddingTop: 42,
   },
   titleContainer: {
     width: '100%',
@@ -103,6 +110,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  gradient: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#16171d',
+    paddingTop: 42,
+    height: height,
+  },
 });
 
-export default SecondPresentationMessagingScreen;
+export default PaymentScreen;

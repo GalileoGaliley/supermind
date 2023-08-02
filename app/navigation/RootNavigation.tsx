@@ -68,7 +68,7 @@ const RootNavigation = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator initialRouteName="Tabs">
+      <RootStack.Navigator initialRouteName="Start">
         <RootStack.Screen
           name="Tabs"
           component={TabNavigation}
