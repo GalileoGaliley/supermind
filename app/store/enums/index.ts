@@ -3,7 +3,23 @@ enum SliceNames {
   CHAT = 'CHAT',
   HISTORY = 'HISTORY',
   PRESETS = 'PRESETS',
+  PRODUCTS = 'PRODUCTS',
 }
+
+enum SubscribeType {
+  TRIAL,
+  WEEK,
+  MONTH,
+  YEAR,
+}
+
+export const SubNamesEN: {[key: string]: string} = {
+  'one month subscribe (com.supermind (unreviewed))': 'Weekly',
+  'Week sub with 3 days free trial (com.supermind (unreviewed))':
+    '3 days free trial',
+  'One year subscribe (com.supermind (unreviewed))': 'Best Price',
+  'One week without trial (com.supermind (unreviewed))': 'Monyhly',
+};
 
 export const promptsList = [
   {

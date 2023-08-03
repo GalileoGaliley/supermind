@@ -1,5 +1,12 @@
-import React, {useEffect, useRef} from 'react';
-import { Animated, Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Animated,
+  Text,
+} from 'react-native';
 import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,16 +15,24 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamsList} from '../../navigation/types';
 // @ts-ignore
 import robot from '../../../app/assets/videos/robot_v3.mp4';
-// @ts-ignore
-import PoweredByIc from '../../assets/images/icons/PoweredBy';
 import Button from '../../components/button';
 import Chevron from '../../assets/images/icons/Chevron';
-import PromptContainer from "../../components/presentationPrompts/components/PromptContainer";
-import PaymentPrompts from "../../components/paymentPrompts/PaymentPrompts";
+import PaymentPrompts from '../../components/paymentPrompts/PaymentPrompts';
+import PaymentSelector from '../../components/paymentSelector/PaymentSelector';
+import {useSubsCount} from '../../store/products/products.selectors';
+import {requestSubscription} from 'react-native-iap';
 
 const {width, height} = Dimensions.get('window');
 
 const PaymentScreen = () => {
+  const [selected, setSelected] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
+
+  const animOpacity = useRef(new Animated.Value(0)).current;
+  const animHeight = useRef(new Animated.Value(100)).current;
+
+  const countElem = useSubsCount();
+
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const videoRef = useRef<Video>(null);
 
@@ -29,8 +44,25 @@ const PaymentScreen = () => {
     }
   }, []);
 
+  useEffect(() => {
+    Animated.timing(animOpacity, {
+      useNativeDriver: false,
+      duration: 300,
+      toValue: !showOptions ? 1 : 0,
+    }).start();
+    Animated.timing(animHeight, {
+      useNativeDriver: false,
+      duration: 300,
+      toValue: !showOptions ? 130 : 65,
+    }).start();
+  }, [showOptions]);
+
   const press = () => {
-    navigation.navigate('Tabs', undefined);
+    requestSubscription({
+      subscriptionOffers: [
+        {offerToken: selected, sku: 'org.super_mind.premium.1week.offer'},
+      ],
+    });
   };
 
   return (
@@ -41,8 +73,58 @@ const PaymentScreen = () => {
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}}
         locations={[0, 0.1, 0.5, 0.9, 1]}>
-        <PaymentPrompts />
+        <Animated.View style={{opacity: animOpacity, width: width}}>
+          <PaymentPrompts />
+        </Animated.View>
         <View style={styles.next}>
+          <Animated.View
+            style={{
+              height: animHeight,
+              transform: [
+                {
+                  translateY: animOpacity.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-(70 * countElem), 0],
+                  }),
+                },
+              ],
+              overflow: 'hidden',
+            }}>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 26,
+                height: 36,
+                textAlign: 'center',
+              }}>
+              Ready to get started?
+            </Text>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 14,
+                textAlign: 'center',
+                marginTop: 5,
+              }}>
+              Unlock unlimited Access
+            </Text>
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 14,
+                textAlign: 'center',
+                marginTop: 15,
+              }}>
+              Try 3 days free, then $5,99/week {'\n'}
+              Auto-renewable. Cancel anytime.
+            </Text>
+          </Animated.View>
+          <PaymentSelector
+            selected={selected}
+            setSelected={setSelected}
+            showOptions={showOptions}
+            setShowOptions={setShowOptions}
+          />
           <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
         </View>
         <View style={styles.videoContainer}>

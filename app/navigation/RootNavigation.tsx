@@ -17,8 +17,9 @@ import SettingsScreen from '../screens/customStack/SettingsScreen';
 import {StyleSheet} from 'react-native';
 import BackButton from '../components/header/components/BackButton';
 // import ChatNavigation from './ChatNavigation';
-import HistoryScreen from '../screens/chatStack/HistoryScreen/HistoryScreen';
-import ChatNavigation from "./ChatNavigation";
+import ChatNavigation from './ChatNavigation';
+import {getSubscriptions, initConnection} from 'react-native-iap';
+import {addProductsAction} from '../store/products/products.slice';
 
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
@@ -29,6 +30,34 @@ const RootStack = createStackNavigator<RootStackParamsList>();
 const RootNavigation = () => {
   const dispatch = useDispatch();
 
+  const getProd = async () => {
+    const connected = await initConnection();
+    console.log('connected');
+    console.log('connected');
+    console.log('connected');
+    console.log(connected);
+    console.log('connected');
+    console.log('connected');
+    console.log('connected');
+    console.log('connected');
+
+    if (connected) {
+      const skus = {
+        skus: [
+          'org.super_mind.premium.1month',
+          'org.super_mind.premium.1week',
+          'org.super_mind.premium.1week.offer',
+          'org.super_mind.premium.1year',
+        ],
+      };
+      const subs = await getSubscriptions(skus);
+      // @ts-ignore
+      await dispatch(addProductsAction(subs));
+    }
+  };
+  useEffect(() => {
+    getProd();
+  });
   const token = useUserToken();
 
   useEffect(() => {

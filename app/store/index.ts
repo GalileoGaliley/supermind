@@ -13,6 +13,7 @@ import chatReducer from './chat/chat.slice';
 import chatPromoReducer from './chatsPromo/chatsPromo.slice';
 import historyReducer from './history/history.slice';
 import presetsReducer from './presets/presets.slice';
+import productsReducer from './products/products.slice';
 import type {Dependencies, Middlewares, Reducers, RootState} from './types';
 import userReducer from './user/user.slice';
 
@@ -30,6 +31,7 @@ const reducers: Reducers = {
   history: historyReducer,
   chatsPromo: chatPromoReducer,
   presets: presetsReducer,
+  products: productsReducer,
 };
 
 const persistConfig = {

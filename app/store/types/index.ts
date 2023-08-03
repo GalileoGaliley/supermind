@@ -19,6 +19,7 @@ import {ChatPromptState} from '../chatsPromo/chatsPromo.types';
 import {HistoryState} from '../history/history.types';
 import {PresetsState} from '../presets/presets.types';
 import {UserState} from '../user/user.types';
+import { ProductsState } from "../products/products.types";
 
 type PayloadAction<T> = ReduxPayloadAction<T>;
 
@@ -46,6 +47,7 @@ type RootState = {
   history: HistoryState;
   chatsPromo: ChatPromptState;
   presets: PresetsState;
+  products: ProductsState;
 } & PersistPartial;
 
 type ThunkMiddlewareOptions = {
