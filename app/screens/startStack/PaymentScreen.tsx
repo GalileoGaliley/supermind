@@ -68,11 +68,23 @@ const PaymentScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
-        colors={['#16171D', '#16171D', 'transparent', '#16171D', '#16171D']}
+        colors={[
+          '#16171D',
+          'rgba(0, 0, 0, 0.7)',
+          'transparent',
+          'rgba(0, 0, 0, 0.7)',
+          '#16171D',
+        ]}
         style={styles.gradient}
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}}
-        locations={[0, 0.1, 0.5, 0.9, 1]}>
+        locations={[
+          0,
+          !showOptions ? 0.15 : 0.25,
+          0.5,
+          !showOptions ? 0.85 : 0.75,
+          1,
+        ]}>
         <Animated.View style={{opacity: animOpacity, width: width}}>
           <PaymentPrompts />
         </Animated.View>

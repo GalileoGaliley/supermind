@@ -29,7 +29,7 @@ const PaymentItem = ({name, price, period, onPress, selected}: OwnProps) => {
       </View>
       <View>
         <Text style={[styles.text, {marginRight: 16}]}>
-          {price}/{period}
+          {price}/week
         </Text>
       </View>
     </TouchableOpacity>

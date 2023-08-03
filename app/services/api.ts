@@ -18,7 +18,6 @@ axiosInstance.interceptors.request.use(
         user: {token},
       },
     } = getState();
-    console.log(token);
     const authHeader = {
       Authorization: tokenAPI ? `Bearer ${tokenAPI}` : '',
     };

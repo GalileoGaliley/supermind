@@ -13,7 +13,6 @@ const createChat = async (reqData: {
     const {data: chat} = await axios.post(chatUrl, reqData);
     return chat;
   } catch (error) {
-    console.log(error);
     return Promise.reject(error);
   }
 };

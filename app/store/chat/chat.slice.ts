@@ -24,7 +24,6 @@ const chatSlice = createSlice({
   name: SliceNames.CHAT,
   reducers: {
     fillChat: (state, {payload}) => {
-      console.log(payload);
       state.chat = payload;
     },
     addMessage: (state, {payload}: {payload: string}) => {
@@ -81,7 +80,6 @@ const chatSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchChatPresetDataAction.fulfilled, (state, {payload}) => {
-        console.log(payload);
         state.chat = payload;
         state.loading = false;
       })

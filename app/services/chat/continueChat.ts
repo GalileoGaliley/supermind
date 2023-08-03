@@ -39,7 +39,6 @@ const continueChat = async (
         let text = payload.choices[0].delta.content;
         if (text !== '\n') {
           textMessage += text;
-          console.log(textMessage);
         }
       }
     });

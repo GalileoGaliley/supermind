@@ -32,14 +32,6 @@ const RootNavigation = () => {
 
   const getProd = async () => {
     const connected = await initConnection();
-    console.log('connected');
-    console.log('connected');
-    console.log('connected');
-    console.log(connected);
-    console.log('connected');
-    console.log('connected');
-    console.log('connected');
-    console.log('connected');
 
     if (connected) {
       const skus = {

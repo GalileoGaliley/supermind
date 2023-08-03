@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PaymentItem from './components/PaymentItem';
 import {useSubscribes} from '../../store/products/products.selectors';
@@ -18,7 +18,6 @@ const PaymentSelector = ({
   const animHeight = useRef(new Animated.Value(0)).current;
 
   const subscribes = useSubscribes();
-
   const openPopup = () => {
     Animated.timing(animHeight, {
       duration: 500,
@@ -36,6 +35,15 @@ const PaymentSelector = ({
     }).start();
     setShowOptions(false);
   };
+
+  useEffect(() => {
+    if (subscribes && !selected) {
+      setSelected(
+        subscribes[Object.keys(subscribes)[0]].subscriptionOfferDetails[0]
+          .offerToken,
+      );
+    }
+  }, []);
 
   return (
     <View style={styles.container}>

@@ -30,10 +30,6 @@ const ChatsPresetsScreen = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    console.log(selectedPreset);
-  }, [selectedPreset]);
-
   return (
     <View style={styles.back}>
       <TitleList
