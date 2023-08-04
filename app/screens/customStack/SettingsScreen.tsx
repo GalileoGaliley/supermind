@@ -24,6 +24,9 @@ const SettingsScreen = () => {
       message: 'Try send message for AI',
     });
   };
+  const rate = () => {
+
+  };
 
   const settingData = [
     {
@@ -48,7 +51,7 @@ const SettingsScreen = () => {
     },
     {
       title: 'Rate Us',
-      callback: () => console.log('Rate'),
+      callback: rate,
       Icon: () => <StarIcon />,
     },
     {

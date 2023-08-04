@@ -12,7 +12,9 @@ type OwnProps = {
 
 const PaymentItem = ({name, price, period, onPress, selected}: OwnProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.listItem]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.listItem, {borderWidth: selected ? 1 : 0}]}>
       <View style={styles.mainInfo}>
         <View
           style={[
@@ -21,14 +23,14 @@ const PaymentItem = ({name, price, period, onPress, selected}: OwnProps) => {
           ]}
         />
         <View style={{flexDirection: 'column'}}>
-          <Text style={styles.text}>{name}</Text>
+          <Text style={[styles.text, {fontWeight: '300'}]}>{name}</Text>
           <Text style={styles.text}>
             {price}/{period}
           </Text>
         </View>
       </View>
       <View>
-        <Text style={[styles.text, {marginRight: 16}]}>
+        <Text style={[styles.text, {marginRight: 16, fontSize: 11}]}>
           {price}/week
         </Text>
       </View>
@@ -42,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(155,155,155,0.2)',
     width: '100%',
     borderRadius: 10,
+    borderColor: '#fff',
     flexDirection: 'row',
     marginBottom: 10,
     alignItems: 'center',

@@ -8,7 +8,6 @@ import React, {createRef, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {fetchSignInAction} from '../store/user/user.actions';
-import {useUserToken} from '../store/user/user.selectors';
 
 import StartNavigation from './StartNavigation';
 import {RootStackParamsList} from './types';
@@ -18,9 +17,20 @@ import {StyleSheet} from 'react-native';
 import BackButton from '../components/header/components/BackButton';
 // import ChatNavigation from './ChatNavigation';
 import ChatNavigation from './ChatNavigation';
-import {getSubscriptions, initConnection} from 'react-native-iap';
-import {addProductsAction} from '../store/products/products.slice';
-
+import {
+  getAvailablePurchases,
+  getSubscriptions,
+  initConnection,
+} from 'react-native-iap';
+import {
+  addActiveSubsAction,
+  addProductsAction,
+  setLoading,
+} from '../store/products/products.slice';
+import RNDeviceInfo from 'react-native-device-info';
+import {useProductsLoading} from '../store/products/products.selectors';
+import SplashComponent from '../components/splashComponent/SplashComponent';
+import SplashScreen from 'react-native-splash-screen';
 // import {useFirebase} from 'common/types/hooks/useFirebase';
 
 export const navigationRef =
@@ -29,10 +39,11 @@ const RootStack = createStackNavigator<RootStackParamsList>();
 
 const RootNavigation = () => {
   const dispatch = useDispatch();
+  const DI = RNDeviceInfo.getDeviceId();
+  const loading = useProductsLoading();
 
   const getProd = async () => {
     const connected = await initConnection();
-
     if (connected) {
       const skus = {
         skus: [
@@ -45,28 +56,28 @@ const RootNavigation = () => {
       const subs = await getSubscriptions(skus);
       // @ts-ignore
       await dispatch(addProductsAction(subs));
+
+      const activeSub = await getAvailablePurchases();
+      if (activeSub.length) {
+        dispatch(addActiveSubsAction(activeSub));
+      }
     }
+    await dispatch(setLoading(false));
   };
+
   useEffect(() => {
     getProd();
-  });
-  const token = useUserToken();
+    SplashScreen.hide();
+  }, []);
 
   useEffect(() => {
     const data = {
       key: 'yYbW0NpF4HKDarHuyjNGPEn7updjR5g',
-      uuid: 'test1111',
+      uuid: DI,
     };
-    if (!token) {
-      dispatch(fetchSignInAction(data));
-      return;
-    }
+    dispatch(fetchSignInAction(data));
+    return;
   }, []);
-
-  // const rootOptions: StackNavigationOptions = {
-  //   // headerShown: false,
-  //   headerTitleAlign: 'center',
-  // };
 
   const navOptions: StackNavigationOptions = {
     headerShown: false,
@@ -87,6 +98,9 @@ const RootNavigation = () => {
     headerTitleStyle: styles.screenTitle,
   };
 
+  if (loading) {
+    return <SplashComponent />;
+  }
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator initialRouteName="Start">

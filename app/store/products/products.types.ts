@@ -13,10 +13,11 @@ type SubData = {
 
 type ProductsState = {
   subs: Sub[];
+  subsActive: any;
   subscribes: {
     [key: string]: SubData;
   };
   loading: boolean;
 };
 
-export type {ProductsState};
+export type {ProductsState, SubData};

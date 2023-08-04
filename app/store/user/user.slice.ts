@@ -13,7 +13,13 @@ const initialState: UserState = {
 const userSlice = createSlice({
   initialState,
   name: SliceNames.USER,
-  reducers: {},
+  reducers: {
+    changeFreeRequest: (state, payload) => {
+      if (state.user.freeRequest) {
+        state.user.freeRequest = state.user.freeRequest - 1;
+      }
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchSignInAction.fulfilled, (state, {payload}) => {
@@ -32,3 +38,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const {changeFreeRequest} = userSlice.actions;

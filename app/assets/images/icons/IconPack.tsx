@@ -325,6 +325,19 @@ export const CameraIcon = () => {
   );
 };
 
+export const CloseCrossIcon = () => {
+  return (
+    <Svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+      <Path
+        d="M22.1415 7.35859L7.42455 22.2076M22.1415 22.2076L7.42455 7.35841"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </Svg>
+  );
+};
+
 export const GalleryIcon = () => {
   return (
     <Svg width="22" height="22" viewBox="0 0 22 22" fill="none">

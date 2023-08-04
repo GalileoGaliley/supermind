@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import {SliceNames} from '../enums';
-import {SubscriptionAndroid} from 'react-native-iap';
+import {Purchase, SubscriptionAndroid} from 'react-native-iap';
 import {ProductsState} from './products.types';
 
 const initialState: ProductsState = {
   subs: [],
+  subsActive: '',
   subscribes: {
     'Week sub with 3 days free trial': {
       subscriptionOfferDetails: [],
@@ -32,7 +33,7 @@ const initialState: ProductsState = {
       sku: 'org.super_mind.premium.1year',
     },
   },
-  loading: false,
+  loading: true,
 };
 
 const productSlice = createSlice({
@@ -48,8 +49,15 @@ const productSlice = createSlice({
         }
       });
     },
+    addActiveSubsAction: (state, {payload}: {payload: Purchase[]}) => {
+      state.subsActive = payload;
+    },
+    setLoading: (state, {payload}: {payload: boolean}) => {
+      state.loading = payload;
+    },
   },
 });
 
-export const {addProductsAction} = productSlice.actions;
+export const {addProductsAction, setLoading, addActiveSubsAction} =
+  productSlice.actions;
 export default productSlice.reducer;

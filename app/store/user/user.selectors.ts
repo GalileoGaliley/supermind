@@ -9,6 +9,15 @@ const useUserToken = () =>
     }) => token,
   );
 
+const useFreeRequests = () =>
+  useAppSelector(
+    ({
+      user: {
+        user: {freeRequest},
+      },
+    }) => freeRequest,
+  );
+
 const useUserLoading = () => useAppSelector(({user: {loading}}) => loading);
 
-export {useUserToken, useUserLoading};
+export {useUserToken, useUserLoading, useFreeRequests};

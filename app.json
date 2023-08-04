@@ -1,4 +1,9 @@
 {
   "name": "supermind",
-  "displayName": "supermind"
+  "displayName": "supermind",
+  "splash": {
+    "image": "./assets/launch-screen.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#ffffff"
+  }
 }

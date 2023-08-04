@@ -6,7 +6,8 @@ import {
   View,
   Animated,
   Text,
-} from 'react-native';
+  TouchableOpacity, Share
+} from "react-native";
 import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,19 +20,24 @@ import Button from '../../components/button';
 import Chevron from '../../assets/images/icons/Chevron';
 import PaymentPrompts from '../../components/paymentPrompts/PaymentPrompts';
 import PaymentSelector from '../../components/paymentSelector/PaymentSelector';
-import {useSubsCount} from '../../store/products/products.selectors';
+import {
+  useSubsCount,
+  useSubscribes,
+} from '../../store/products/products.selectors';
 import {requestSubscription} from 'react-native-iap';
+import {CloseCrossIcon} from '../../assets/images/icons/IconPack';
 
 const {width, height} = Dimensions.get('window');
 
 const PaymentScreen = () => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState({token: '', sku: ''});
   const [showOptions, setShowOptions] = useState(false);
 
   const animOpacity = useRef(new Animated.Value(0)).current;
   const animHeight = useRef(new Animated.Value(100)).current;
 
   const countElem = useSubsCount();
+  const subscribes = useSubscribes();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const videoRef = useRef<Video>(null);
@@ -57,34 +63,38 @@ const PaymentScreen = () => {
     }).start();
   }, [showOptions]);
 
-  const press = () => {
-    requestSubscription({
-      subscriptionOffers: [
-        {offerToken: selected, sku: 'org.super_mind.premium.1week.offer'},
-      ],
+  const press = async () => {
+    const data = await requestSubscription({
+      subscriptionOffers: [{offerToken: selected.token, sku: selected.sku}],
     });
+    if (data) {
+      await Share.share({
+        message: JSON.stringify(data),
+      });
+    }
+  };
+
+  const pressed = async () => {
+    navigation.navigate('Tabs');
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity style={styles.cross} onPress={pressed}>
+        <CloseCrossIcon />
+      </TouchableOpacity>
       <LinearGradient
         colors={[
           '#16171D',
-          'rgba(0, 0, 0, 0.7)',
-          'transparent',
-          'rgba(0, 0, 0, 0.7)',
+          'rgba(10, 10, 40, 0.7)',
+          !showOptions ? 'transparent' : 'rgba(0, 0, 0, 0.6)',
+          'rgba(10, 10, 40, 0.7)',
           '#16171D',
         ]}
         style={styles.gradient}
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}}
-        locations={[
-          0,
-          !showOptions ? 0.15 : 0.25,
-          0.5,
-          !showOptions ? 0.85 : 0.75,
-          1,
-        ]}>
+        locations={[0, 0.1, 0.5, 0.9, 1]}>
         <Animated.View style={{opacity: animOpacity, width: width}}>
           <PaymentPrompts />
         </Animated.View>
@@ -105,7 +115,7 @@ const PaymentScreen = () => {
             <Text
               style={{
                 color: '#fff',
-                fontSize: 26,
+                fontSize: 23,
                 height: 36,
                 textAlign: 'center',
               }}>
@@ -125,19 +135,29 @@ const PaymentScreen = () => {
                 color: '#fff',
                 fontSize: 14,
                 textAlign: 'center',
-                marginTop: 15,
+                marginTop: 10,
               }}>
               Try 3 days free, then $5,99/week {'\n'}
               Auto-renewable. Cancel anytime.
             </Text>
           </Animated.View>
           <PaymentSelector
+            subscribes={subscribes}
             selected={selected}
             setSelected={setSelected}
             showOptions={showOptions}
             setShowOptions={setShowOptions}
           />
-          <Button onPress={press} Icon={<Chevron />} title={'Continue'} />
+          <Button
+            onPress={press}
+            Icon={<Chevron />}
+            title={
+              selected.sku === 'org.super_mind.premium.1week.offer'
+                ? 'Try for free'
+                : 'Continue'
+            }
+          />
+          {/*<Button onPress={pressed} Icon={<Chevron />} title={'CONtinuE'} />*/}
         </View>
         <View style={styles.videoContainer}>
           <Video
@@ -212,6 +232,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#16171d',
     paddingTop: 42,
     height: height,
+  },
+  cross: {
+    position: 'absolute',
+    right: 30,
+    top: 70,
+    zIndex: 99,
   },
 });
 

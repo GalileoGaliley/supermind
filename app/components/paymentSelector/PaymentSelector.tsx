@@ -1,23 +1,24 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PaymentItem from './components/PaymentItem';
-import {useSubscribes} from '../../store/products/products.selectors';
+import {SubData} from '../../store/products/products.types';
 
 type OwnProps = {
   setShowOptions: (T: boolean) => void;
   showOptions: boolean;
-  selected: string;
-  setSelected: (T: string) => void;
+  selected: {token: string; sku: string};
+  setSelected: (T: {token: string; sku: string}) => void;
+  subscribes: {[P: string]: SubData};
 };
 const PaymentSelector = ({
   showOptions,
   setShowOptions,
   setSelected,
   selected,
+  subscribes,
 }: OwnProps) => {
   const animHeight = useRef(new Animated.Value(0)).current;
 
-  const subscribes = useSubscribes();
   const openPopup = () => {
     Animated.timing(animHeight, {
       duration: 500,
@@ -37,11 +38,14 @@ const PaymentSelector = ({
   };
 
   useEffect(() => {
-    if (subscribes && !selected) {
-      setSelected(
+    const selectData = {
+      token:
         subscribes[Object.keys(subscribes)[0]].subscriptionOfferDetails[0]
           .offerToken,
-      );
+      sku: subscribes[Object.keys(subscribes)[0]].sku,
+    };
+    if (subscribes && !selected.sku) {
+      setSelected(selectData);
     }
   }, []);
 
@@ -55,14 +59,13 @@ const PaymentSelector = ({
                 subscribes[item].subscriptionOfferDetails[0].pricingPhases
                   .pricingPhaseList[0].formattedPrice
               }
-              selected={
-                selected ===
-                subscribes[item].subscriptionOfferDetails[0].offerToken
-              }
+              selected={selected.sku === subscribes[item].sku}
               onPress={() =>
-                setSelected(
-                  subscribes[item].subscriptionOfferDetails[0].offerToken,
-                )
+                setSelected({
+                  token:
+                    subscribes[item].subscriptionOfferDetails[0].offerToken,
+                  sku: subscribes[item].sku,
+                })
               }
               token={subscribes[item].subscriptionOfferDetails[0].offerToken}
               name={subscribes[item].name || ''}
@@ -74,7 +77,7 @@ const PaymentSelector = ({
       <TouchableOpacity
         style={styles.moreOptionButton}
         onPress={showOptions ? closePopup : openPopup}>
-        <Text style={{color: '#fff'}}>
+        <Text style={{color: '#fff', fontSize: 12}}>
           {showOptions ? 'Hide options ▼' : 'More options ▲'}
         </Text>
       </TouchableOpacity>
@@ -91,9 +94,9 @@ const styles = StyleSheet.create({
   },
   moreOptionButton: {
     backgroundColor: 'rgba(155,155,155,0.2)',
-    padding: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    padding: 7,
+    paddingHorizontal: 15,
+    borderRadius: 7,
   },
   list: {
     width: '100%',

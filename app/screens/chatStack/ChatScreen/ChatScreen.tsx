@@ -1,13 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Keyboard,
-  Dimensions,
-  FlatList,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, Keyboard, Dimensions, FlatList} from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamsList} from '../../../navigation/types';
 import ChatInput from '../../../components/ChatInput/ChatInput';
@@ -41,11 +33,17 @@ const ChatScreen = () => {
     };
   }, []);
   const dispatch = useDispatch();
-  const ref = useRef<any>();
 
   const chat = useChat();
-  const keyH = Keyboard.metrics()?.height;
+  const [keyHeught, setKeyHeight] = useState(0);
   const loading = useChatLoading();
+
+  useEffect(() => {
+    const h = Keyboard.metrics()?.height;
+    if (h) {
+      setKeyHeight(h);
+    }
+  }, [isKeyboardVisible]);
 
   const {
     params: {data},
@@ -72,14 +70,14 @@ const ChatScreen = () => {
     <View
       style={{
         backgroundColor: '#16171D',
-        height: keyH ? height - keyH : height,
+        height: keyHeught ? height - keyHeught : height,
         position: 'relative',
       }}>
       <FlatList
         style={styles.container}
         data={chat.messages}
         inverted={true}
-        renderItem={({item, index}) => {
+        renderItem={({item}) => {
           return (
             <>
               <MessageItem message={item.content} role={item.role} />

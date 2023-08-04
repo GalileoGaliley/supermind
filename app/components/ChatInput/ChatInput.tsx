@@ -10,23 +10,30 @@ import {
 import ChatModal from './components/ChatModal';
 import TextRecognition from 'react-native-text-recognition';
 import Microphone from './components/Microphone';
+import {useFreeRequests} from '../../store/user/user.selectors';
+import {useDispatch} from 'react-redux';
+import {changeFreeRequest} from '../../store/user/user.slice';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../navigation/types';
 
 const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   const [text, setText] = useState<string>('');
   const [inputHeight, setInputHeight] = useState(50);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const [stopped, setStopped] = useState(true);
 
+  const freeRequests = useFreeRequests();
+  const dispatch = useDispatch();
+
   const [showModal, setShowModal] = useState(false);
-  const [proccessing, setProccessing] = useState<boolean>(false);
   const [textFromPhoto, setTextFromPhoto] = useState<string>('');
 
   const detectTextFromPhoto = async (image: string) => {
     setShowModal(false);
-    await setProccessing(true);
     try {
       const text = await TextRecognition.recognize(image, {});
       setTextFromPhoto(text.join('\n'));
-      await setProccessing(false);
     } catch (e) {
       console.log(e);
     }
@@ -41,8 +48,13 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   };
 
   const send = () => {
-    sendMessage(text);
-    setText('');
+    if (freeRequests && freeRequests > 0) {
+      sendMessage(text);
+      setText('');
+      dispatch(changeFreeRequest(''));
+    } else {
+      navigation.navigate('PaymentScreen');
+    }
   };
 
   useEffect(() => {
