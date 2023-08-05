@@ -5959,6 +5959,11 @@ react-native-linear-gradient@^2.7.3:
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.7.3.tgz#f77b71ed7c955e033f9cba5fc8478df57953eb27"
   integrity sha512-iyJszlZ1Ech2c+2qV+isMvvJKyoctR9ashDkhJg1/cuSF0vQaeLV1FAYTT3qW9doxChJGxVAFfYoxotH0yi3Iw==
 
+react-native-qonversion@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-qonversion/-/react-native-qonversion-5.0.2.tgz#9a2bea7419fe02d060ff7bf4d81a0cc95fe92a88"
+  integrity sha512-D3teGRNlT1rQxmeDsq7+X5ZB2PvX3gdUe6Md7sJ6JzRwinhYy4H/fSyADZAHDLDGCrCAwSgOkKYaLcnTBuJJWg==
+
 react-native-safe-area-context@^4.2.4:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.7.1.tgz#b7be2d68dee909717cfa439bb5c7966042d231e8"

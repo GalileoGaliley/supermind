@@ -58,11 +58,11 @@ const RootNavigation = () => {
       await dispatch(addProductsAction(subs));
 
       const activeSub = await getAvailablePurchases();
+      dispatch(setLoading(false));
       if (activeSub.length) {
         dispatch(addActiveSubsAction(activeSub));
       }
     }
-    await dispatch(setLoading(false));
   };
 
   useEffect(() => {

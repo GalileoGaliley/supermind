@@ -12,8 +12,18 @@ import {PersistGate} from 'redux-persist/integration/react';
 import RootNavigation from './app/navigation/RootNavigation';
 import {persistor, store} from './app/store';
 import {StatusBar} from 'react-native';
+import Qonversion, {
+  QonversionConfigBuilder,
+  LaunchMode,
+} from 'react-native-qonversion';
 
 function App(): JSX.Element {
+  const config = new QonversionConfigBuilder(
+    'IhXFbv6Jz-_qZ_NYYbcwpgHvoAuN1A5U',
+    LaunchMode.ANALYTICS,
+  ).build();
+  Qonversion.initialize(config);
+
   return (
     <PersistGate persistor={persistor}>
       <StatusBar translucent backgroundColor="transparent" />

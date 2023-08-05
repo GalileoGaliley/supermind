@@ -107,7 +107,6 @@ const Microphone = ({change, setStopped, stopped}: OwnProps) => {
           {
             width: animatedSize,
             height: animatedSize,
-            backgroundColor: '#ff0',
             borderRadius: 100,
             alignItems: 'center',
             justifyContent: 'center',

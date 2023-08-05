@@ -78,8 +78,8 @@ android {
         applicationId "com.supermind"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 104
+        versionName "1.0.4"
         missingDimensionStrategy "store", "play"
     }
     signingConfigs {
