@@ -16,6 +16,7 @@ import {changeFreeRequest} from '../../store/user/user.slice';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../navigation/types';
+import {useActiveSubs} from '../../store/products/products.selectors';
 
 const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   const [text, setText] = useState<string>('');
@@ -23,6 +24,7 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const [stopped, setStopped] = useState(true);
 
+  const activeSubs = useActiveSubs();
   const freeRequests = useFreeRequests();
   const dispatch = useDispatch();
 
@@ -48,15 +50,15 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   };
 
   const send = () => {
-    if (freeRequests && freeRequests > 0) {
+    if (
+      (freeRequests && freeRequests > 0) ||
+      (activeSubs && activeSubs.length > 0)
+    ) {
       sendMessage(text);
       setText('');
       dispatch(changeFreeRequest(''));
     } else {
-      //TODO исправить
-      sendMessage(text);
-      setText('');
-      dispatch(changeFreeRequest(''));
+      navigation.navigate('PaymentScreen');
     }
   };
 
