@@ -25,7 +25,11 @@ const historySlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getHistoryAction.fulfilled, (state, {payload}) => {
-        state.history = payload;
+        state.history = payload.map((item) => {
+          const messages = item.messages.reverse();
+          item.messages = messages;
+          return item;
+        });
         state.loading = false;
       })
       .addCase(getHistoryAction.pending, state => {

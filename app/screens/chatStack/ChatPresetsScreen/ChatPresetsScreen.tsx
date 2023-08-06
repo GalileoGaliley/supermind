@@ -6,13 +6,14 @@ import {useUserToken} from '../../../store/user/user.selectors';
 import {getPresetsAction} from '../../../store/presets/presets.actions';
 import {
   usePresetsIds,
-  usePresetsItems,
-  usePresetsTitles,
-} from '../../../store/presets/presets.selectors';
+  usePresetsItems, usePresetsLoading,
+  usePresetsTitles
+} from "../../../store/presets/presets.selectors";
 import TitleList from './components/TitleList';
 import PresetsList from './components/PresetsList';
+import LoadSpin from "../../../components/splashComponent/LoadSpin";
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('screen');
 
 const ChatsPresetsScreen = () => {
   const [selectedPreset, setSelectedPreset] = useState('All');
@@ -21,6 +22,7 @@ const ChatsPresetsScreen = () => {
   const token = useUserToken();
 
   const chatsPresets = usePresetsItems();
+  const loading = usePresetsLoading();
   const chatsPresetsIds = usePresetsIds();
   const titles = usePresetsTitles();
 
@@ -29,6 +31,21 @@ const ChatsPresetsScreen = () => {
       dispatch(getPresetsAction());
     }
   }, [token]);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          backgroundColor: '#16171D',
+          width: width,
+          height: height,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <LoadSpin />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.back}>

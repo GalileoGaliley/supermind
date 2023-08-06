@@ -88,9 +88,9 @@ const TabNavigation = () => {
   };
 
   const tabPresetsOptions: BottomTabNavigationOptions = {
-    tabBarLabel: 'Tasks fo AI',
+    tabBarLabel: 'Tasks for AI',
     tabBarIcon: ({focused}) => <PresetsIcon active={focused} />,
-    title: 'Tasks fo AI',
+    title: 'Tasks for AI',
     headerLeft: () => (
       <HeaderButton
         callback={pressHistoryButton}

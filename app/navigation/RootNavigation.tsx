@@ -60,7 +60,7 @@ const RootNavigation = () => {
       const activeSub = await getAvailablePurchases();
       dispatch(setLoading(false));
       if (activeSub.length) {
-        dispatch(addActiveSubsAction(activeSub));
+        await dispatch(addActiveSubsAction(activeSub));
       }
     }
   };

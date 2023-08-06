@@ -47,7 +47,9 @@ const HistoryItem = ({item}: OwnProps) => {
     <View style={styles.container}>
       <View style={styles.messageContainer}>
         <View style={styles.messageItem}>
-          <Text style={styles.messageText}>{messages[0].content}</Text>
+          <Text style={styles.messageText}>
+            {messages[messages.length - 1].content}
+          </Text>
         </View>
         <TouchableOpacity style={styles.continueButton} onPress={goToChat}>
           <Chevron />

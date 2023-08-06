@@ -53,7 +53,10 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
       setText('');
       dispatch(changeFreeRequest(''));
     } else {
-      navigation.navigate('PaymentScreen');
+      //TODO исправить
+      sendMessage(text);
+      setText('');
+      dispatch(changeFreeRequest(''));
     }
   };
 

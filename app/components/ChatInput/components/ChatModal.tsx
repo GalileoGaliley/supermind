@@ -91,7 +91,7 @@ const ChatModal = ({show, detectTextFromPhoto}: OwnProps) => {
         </View>
         <Text style={styles.title}>Gallery</Text>
       </TouchableOpacity>
-      <BlurView style={styles.absolute} blurType="transparent" blurRadius={3} />
+      <BlurView style={styles.absolute} blurType="dark" blurRadius={3} />
     </Animated.View>
   );
 };

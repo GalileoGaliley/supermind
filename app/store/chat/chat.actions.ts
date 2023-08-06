@@ -15,6 +15,17 @@ const fetchChatAction = createAsyncThunk<Chat, FetchChatData, ThunkAsyncConfig>(
     },
   ) => {
     try {
+      console.log('');
+      console.log('fetchChatService');
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('fetchChatService');
+      console.log('');
+
       const chatData = await fetchChatService(data);
       return chatData;
     } catch (error) {

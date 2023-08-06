@@ -10,7 +10,7 @@ import {useChat, useChatLoading} from '../../../store/chat/chat.selectors';
 import {fetchChatAction} from '../../../store/chat/chat.actions';
 import HolderChat from './components/Holder';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const ChatScreen = () => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -32,16 +32,19 @@ const ChatScreen = () => {
       keyboardDidShowListener.remove();
     };
   }, []);
+
   const dispatch = useDispatch();
 
   const chat = useChat();
-  const [keyHeught, setKeyHeight] = useState(0);
+  const [keyHeight, setKeyHeight] = useState(0);
   const loading = useChatLoading();
 
   useEffect(() => {
     const h = Keyboard.metrics()?.height;
     if (h) {
       setKeyHeight(h);
+    } else {
+      setKeyHeight(0);
     }
   }, [isKeyboardVisible]);
 
@@ -50,6 +53,7 @@ const ChatScreen = () => {
   } = useRoute<RouteProp<RootStackParamsList, 'ChatScreen'>>();
 
   useEffect(() => {
+    console.log('lskdmfkldsfjksdfks dkjv k');
     dispatch(fillChat(data));
     if (data.messages?.length === 1 && data.messages[0].role === 'user') {
       dispatch(
@@ -70,9 +74,10 @@ const ChatScreen = () => {
     <View
       style={{
         backgroundColor: '#16171D',
-        height: keyHeught ? height - keyHeught : height,
+        height: isKeyboardVisible ? height - keyHeight : height,
         position: 'relative',
       }}>
+      <View style={{height: 80}} />
       <FlatList
         style={styles.container}
         data={chat.messages}
@@ -87,7 +92,7 @@ const ChatScreen = () => {
         snapToEnd={true}
       />
       {loading ? <HolderChat /> : null}
-      <View style={{height: 100}} />
+      <View style={{height: 75}} />
       <ChatInput sendMessage={sendMessage} />
     </View>
   );

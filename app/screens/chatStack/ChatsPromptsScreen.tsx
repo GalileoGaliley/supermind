@@ -4,13 +4,14 @@ import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import PromptsScroll from '../../components/Tiles/PromptsScroll';
 import {useDispatch} from 'react-redux';
 import {fetchChatPromoAction} from '../../store/chatsPromo/chatsPromo.actions';
-import {usePrompts} from '../../store/chatsPromo/chatsPromo.selectors';
+import { usePrompts, usePromptsLoading } from "../../store/chatsPromo/chatsPromo.selectors";
 import {useUserToken} from '../../store/user/user.selectors';
 import PromptList from '../../components/Tiles/PromptList';
 import ChatInput from '../../components/ChatInput/ChatInput';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../navigation/types';
+import LoadSpin from "../../components/splashComponent/LoadSpin";
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,6 +21,7 @@ const ChatsPromptsScreen = () => {
   const token = useUserToken();
 
   const chatsPrompts = usePrompts();
+  const loading = usePromptsLoading();
 
   useEffect(() => {
     if (token) {
@@ -38,6 +40,21 @@ const ChatsPromptsScreen = () => {
       },
     });
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          backgroundColor: '#16171D',
+          width: width,
+          height: height,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <LoadSpin />
+      </View>
+    );
+  }
 
   return (
     <View>

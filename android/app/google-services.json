@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "267602603220",
+    "project_id": "supermind-prod-android",
+    "storage_bucket": "supermind-prod-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267602603220:android:21fc2672d430294f3cdf41",
+        "android_client_info": {
+          "package_name": "com.supermind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267602603220-ritc2vt3edlj0pvdut08q14o2apij0vk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsDwnBeYBPeslmdfb_JqCob9BxYnpzU8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267602603220-ritc2vt3edlj0pvdut08q14o2apij0vk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
