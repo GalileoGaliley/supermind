@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Share,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -16,17 +17,35 @@ import {
   StarIcon,
   SubtractIcon,
 } from '../../assets/images/icons/IconPack';
+import {getAvailablePurchases} from 'react-native-iap';
+import {
+  addActiveSubsAction,
+  setLoading,
+} from '../../store/products/products.slice';
+import {useDispatch} from 'react-redux';
 
 const SettingsScreen = () => {
+  const dispatch = useDispatch();
+
+  const openLink = (routeTo: string) => {
+    Linking.canOpenURL(routeTo)
+      .then(supported => {
+        if (!supported) {
+          console.log('Что-то не так');
+        } else {
+          return Linking.openURL(routeTo);
+        }
+      })
+      .catch(error => console.error('Ошибка при открытии ссылки: ', error));
+  };
+
   const share = () => {
     Share.share({
       title: 'ChatGPT here!',
       message: 'Try send message for AI',
     });
   };
-  const rate = () => {
-
-  };
+  const rate = () => {};
 
   const settingData = [
     {
@@ -36,17 +55,27 @@ const SettingsScreen = () => {
     },
     {
       title: 'Terms of Service',
-      callback: () => console.log('Terms'),
+      callback: () => {
+        const link = 'https://appmediaco.com/SuperMindTermsOfUse.html';
+        openLink(link);
+      },
       Icon: () => <SubtractIcon />,
     },
     {
       title: 'Privacy Policy',
-      callback: () => console.log('Privacy'),
+      callback: () => {
+        const link = 'https://appmediaco.com/SuperMindPolicy.html';
+        openLink(link);
+      },
       Icon: () => <PrivacyIcon />,
     },
     {
       title: 'E-mail Support',
-      callback: () => console.log('E-mail'),
+      callback: () => {
+        const emailAddress = 'ThePursuer@mail.ru';
+        const mailtoUrl = `mailto:${emailAddress}`;
+        openLink(mailtoUrl);
+      },
       Icon: () => <MailIcon />,
     },
     {
@@ -56,7 +85,14 @@ const SettingsScreen = () => {
     },
     {
       title: 'Restore Purchase',
-      callback: () => console.log('Restore'),
+      callback: async () => {
+        dispatch(setLoading(true));
+        const activeSub = await getAvailablePurchases();
+        dispatch(setLoading(false));
+        if (activeSub.length) {
+          await dispatch(addActiveSubsAction(activeSub));
+        }
+      },
       Icon: () => <RestoreIcon />,
     },
   ];

@@ -52,7 +52,10 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   const send = () => {
     if (
       (freeRequests && freeRequests > 0) ||
-      (activeSubs && activeSubs.length > 0)
+      (activeSubs &&
+        activeSubs.length > 0 &&
+        activeSubs[activeSubs - 1].purchaseStateAndroid === 1
+      )
     ) {
       sendMessage(text);
       setText('');
