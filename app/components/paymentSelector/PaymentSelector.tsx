@@ -52,7 +52,7 @@ const PaymentSelector = ({
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.list, {height: animHeight}]}>
-        {Object.keys(subscribes).map(item => {
+        {Object.keys(subscribes).map((item, index) => {
           const detailPos = {
             pos: 0,
           };
@@ -65,12 +65,13 @@ const PaymentSelector = ({
 
           return (
             <PaymentItem
-              price={`${
-                parseInt(
-                  details.pricingPhases.pricingPhaseList[0].priceAmountMicros,
-                  10,
-                ) / 1000000
-              }`}
+              index={index}
+              showOptions={showOptions}
+              price={
+                // @ts-ignore
+                details.pricingPhases.pricingPhaseList[0].priceAmountMicros /
+                1000000
+              }
               moneyCode={
                 details.pricingPhases.pricingPhaseList[0].priceCurrencyCode
               }
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     bottom: 35,
     position: 'absolute',
     overflow: 'hidden',
+    paddingTop: 10,
   },
 });
 

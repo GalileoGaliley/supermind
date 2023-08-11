@@ -4,18 +4,22 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 type OwnProps = {
   name: string;
   moneyCode: string;
-  price: string;
+  price: number;
   period: string;
   token: string;
+  index: number;
+  showOptions: boolean;
   selected: boolean;
   onPress: () => void;
 };
 
 const PaymentItem = ({
   name,
+  index,
   price,
   period,
   onPress,
+  showOptions,
   selected,
   moneyCode,
 }: OwnProps) => {
@@ -44,15 +48,38 @@ const PaymentItem = ({
       </View>
       <View>
         <Text style={[styles.text, {marginRight: 16, fontSize: 11}]}>
-          {parseInt(String(parseInt(price, 10) / periods[period]), 10)}{' '}
-          {moneyCode}/week
+          {String((price / periods[period]).toFixed(2))} {moneyCode}/week
         </Text>
       </View>
+      {index === 0 && showOptions ? (
+        <View style={[styles.tip, {backgroundColor: '#D40073'}]}>
+          <Text style={styles.tipText}>POPULAR</Text>
+        </View>
+      ) : null}
+      {index === 3 && showOptions ? (
+        <View style={[styles.tip, {backgroundColor: '#00D474'}]}>
+          <Text style={styles.tipText}>SAVE 93%</Text>
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  tip: {
+    position: 'absolute',
+    borderRadius: 7,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
+    right: 20,
+    top: -10,
+    zIndex: 9999,
+  },
+  tipText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#fff',
+  },
   listItem: {
     height: 52,
     backgroundColor: 'rgba(155,155,155,0.2)',

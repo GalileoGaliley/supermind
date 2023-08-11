@@ -65,7 +65,7 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
       (freeRequests && freeRequests > 0) ||
       (activeSubs &&
         activeSubs.length > 0 &&
-        activeSubs[activeSubs.length - 1].purchaseStateAndroid === 1)
+        activeSubs[0].purchaseStateAndroid === 1)
     ) {
       sendMessage(text);
       setText('');
@@ -135,7 +135,6 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
           }}
         />
       ) : null}
-
       <ChatModal detectTextFromPhoto={detectTextFromPhoto} show={showModal} />
     </>
   );

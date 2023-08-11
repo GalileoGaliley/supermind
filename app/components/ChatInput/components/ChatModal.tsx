@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 150,
     height: 130,
-    backfaceVisibility: 'hidden',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
     paddingLeft: 10,

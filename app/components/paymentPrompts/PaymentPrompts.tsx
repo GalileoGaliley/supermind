@@ -25,7 +25,7 @@ const PaymentPrompts = () => {
             <Text style={styles.text}>Unlimited dialogues</Text>
           </LinearGradient>
         </View>
-        <View style={[styles.box, {position: 'absolute', top: 279, right: 30}]}>
+        <View style={[styles.box, {position: 'absolute', top: 219, right: 30}]}>
           <LinearGradient
             colors={firstColors}
             start={{x: 0.0887, y: 0.2941}}
@@ -36,7 +36,7 @@ const PaymentPrompts = () => {
             <Text style={styles.text}>Tasks history</Text>
           </LinearGradient>
         </View>
-        <View style={[styles.box, {position: 'absolute', top: 330, left: 40}]}>
+        <View style={[styles.box, {position: 'absolute', top: 300, left: 40}]}>
           <LinearGradient
             colors={secondColors}
             start={{x: 0.0887, y: 0.2941}}
@@ -47,7 +47,7 @@ const PaymentPrompts = () => {
           </LinearGradient>
         </View>
         <View
-          style={[styles.box, {position: 'absolute', top: 430, right: 113}]}>
+          style={[styles.box, {position: 'absolute', top: 380, right: 113}]}>
           <LinearGradient
             colors={secondColors}
             start={{x: 0.0887, y: 0.2941}}

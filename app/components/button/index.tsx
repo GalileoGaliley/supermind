@@ -1,5 +1,11 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 type OwnProps = {
@@ -9,17 +15,51 @@ type OwnProps = {
 };
 
 export default ({onPress, title, Icon}: OwnProps) => {
+  const animatedBack = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(animatedBack, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: false,
+      }),
+    ).start();
+  }, []);
+
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <LinearGradient
-        start={{x: 0, y: 0.5}}
-        end={{x: 1, y: 0.5}}
-        colors={['#F70776', '#025CF8']}
-        style={styles.gradient}>
-        <Text style={styles.buttonTitle}>{title}</Text>
-        <View style={styles.icon}>{Icon ? Icon : null}</View>
-      </LinearGradient>
-    </TouchableOpacity>
+    <View style={{alignItems: 'center'}}>
+      <Animated.View
+        style={{
+          top: 0,
+          position: 'absolute',
+          width: animatedBack.interpolate({
+            inputRange: [0, 1],
+            outputRange: [315, 400],
+          }),
+          opacity: animatedBack.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0],
+          }),
+          height: 50,
+        }}>
+        <LinearGradient
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}
+          colors={['#F70776', '#025CF8']}
+          style={styles.gradient}
+        />
+      </Animated.View>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <LinearGradient
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}
+          colors={['#F70776', '#025CF8']}
+          style={styles.gradient}>
+          <Text style={styles.buttonTitle}>{title}</Text>
+          <View style={styles.icon}>{Icon ? Icon : null}</View>
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
   );
 };
 

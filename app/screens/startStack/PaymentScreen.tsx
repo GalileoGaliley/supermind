@@ -79,6 +79,8 @@ const PaymentScreen = () => {
     });
     // @ts-ignore
     if (data && data[0].purchaseStateAndroid === 1) {
+      await navigation.navigate('Tabs');
+
       const subData =
         // @ts-ignore
         subscribes[data[0].productIds[0]].subscriptionOfferDetails[0]
@@ -101,7 +103,6 @@ const PaymentScreen = () => {
           subData[0].priceCurrencyCode,
         );
       }
-      await navigation.navigate('Tabs');
     }
   };
 
