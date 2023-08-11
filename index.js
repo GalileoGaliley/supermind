@@ -23,4 +23,5 @@ if (!firebase.apps.length) {
     });
 }
 crush.crashlytics().log('App opened');
+
 AppRegistry.registerComponent(appName, () => App);

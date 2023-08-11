@@ -8,6 +8,7 @@ import HistoryScreen from '../screens/chatStack/HistoryScreen/HistoryScreen';
 import ChatScreen from '../screens/chatStack/ChatScreen/ChatScreen';
 import {StyleSheet} from 'react-native';
 import BackButton from '../components/header/components/BackButton';
+import HeaderBack from '../components/headerBack/HeaderBack';
 
 const ChatNavigation = () => {
   const ChatStack = createStackNavigator<ChatStackParamsList>();
@@ -20,11 +21,24 @@ const ChatNavigation = () => {
     routeNames,
   }: BaseNavigationOptionParams): StackNavigationOptions => {
     const isRouteIncluded = routeNames.includes(name);
-    console.log(isRouteIncluded);
     return {
       headerMode: 'float',
       cardShadowEnabled: true,
       cardOverlayEnabled: true,
+      cardStyleInterpolator: ({current, layouts}) => {
+        return {
+          cardStyle: {
+            transform: [
+              {
+                translateX: current.progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [layouts.screen.width, 0],
+                }),
+              },
+            ],
+          },
+        };
+      },
     };
   };
 
@@ -32,6 +46,9 @@ const ChatNavigation = () => {
     headerTransparent: true,
     headerShadowVisible: false,
     headerTitleAlign: 'center',
+    headerBackground: () => {
+      return <HeaderBack />;
+    },
     headerLeft: () => <BackButton />,
     headerTitleStyle: styles.screenTitle,
   };

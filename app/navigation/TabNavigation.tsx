@@ -23,6 +23,7 @@ import ChatPresetsScreen from '../screens/chatStack/ChatPresetsScreen/ChatPreset
 import HistoryIcon from '../assets/images/icons/HistoryIcon';
 import GearIcon from '../assets/images/icons/GearIcon';
 import HeaderButton from '../components/header/components/HeaderButton';
+import HeaderBack from '../components/headerBack/HeaderBack';
 
 const TabNavigation = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
@@ -69,9 +70,12 @@ const TabNavigation = () => {
   };
 
   const tabPromptsOptions: BottomTabNavigationOptions = {
-    tabBarLabel: 'Charts',
+    tabBarLabel: 'Chats',
     tabBarIcon: ({focused}) => <ChatPromptsIcon active={focused} />,
     title: 'Chat',
+    headerBackground: () => {
+      return <HeaderBack />;
+    },
     headerLeft: () => (
       <HeaderButton
         callback={pressHistoryButton}

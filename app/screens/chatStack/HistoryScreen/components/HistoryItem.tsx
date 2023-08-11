@@ -44,16 +44,16 @@ const HistoryItem = ({item}: OwnProps) => {
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={goToChat}>
       <View style={styles.messageContainer}>
         <View style={styles.messageItem}>
           <Text style={styles.messageText}>
             {messages[messages.length - 1].content}
           </Text>
         </View>
-        <TouchableOpacity style={styles.continueButton} onPress={goToChat}>
+        <View style={styles.continueButton}>
           <Chevron />
-        </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.infoContainer}>
         <View style={{flexDirection: 'row'}}>
@@ -62,11 +62,13 @@ const HistoryItem = ({item}: OwnProps) => {
             m >= 10 ? m : '0' + m
           }`}</Text>
         </View>
-        <TouchableOpacity onPress={deleteItem}>
+        <TouchableOpacity
+          style={{width: 35, height: 25, alignItems: 'flex-end'}}
+          onPress={deleteItem}>
           <DeleteIcon />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

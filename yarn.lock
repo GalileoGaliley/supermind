@@ -5996,6 +5996,13 @@ react-native-fast-image@8.5.11:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
+react-native-fbsdk-next@^11.2.1:
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-11.2.1.tgz#624b16c245c505887ad1dd17265ddaefb6c71e02"
+  integrity sha512-CfJmexiDpdeAUAGM3uHxLEHyRtiAQTeELoZ+eKp1z9W2X5a7/uITHIxCaqy/B+4GfHCCj4m1WF1RKjOy+d6G/A==
+  dependencies:
+    xml2js "^0.4.23"
+
 react-native-gesture-handler@^2.4.2:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.12.0.tgz#59ca9d97e4c71f70b9c258f14a1a081f4c689976"
@@ -6023,6 +6030,11 @@ react-native-linear-gradient@^2.7.3:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.7.3.tgz#f77b71ed7c955e033f9cba5fc8478df57953eb27"
   integrity sha512-iyJszlZ1Ech2c+2qV+isMvvJKyoctR9ashDkhJg1/cuSF0vQaeLV1FAYTT3qW9doxChJGxVAFfYoxotH0yi3Iw==
+
+react-native-navigation-bar-color@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.2.tgz#2e14ca79a656d81d5b4b7433ae43966ef5206444"
+  integrity sha512-ZmpLWRocyme1au11e5ZuecMS/UCi57nlzgnioi03Q6ERMbeUOqqbWgNBaNB7SsCeqBV6fZPjo3+A64zEIpzw4w==
 
 react-native-qonversion@^5.0.2:
   version "5.0.2"
@@ -7269,7 +7281,7 @@ xcode@^3.0.1:
     simple-plist "^1.1.0"
     uuid "^7.0.3"
 
-xml2js@0.4.23:
+xml2js@0.4.23, xml2js@^0.4.23:
   version "0.4.23"
   resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==

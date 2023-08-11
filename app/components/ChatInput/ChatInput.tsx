@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import {
   CrossIcon,
@@ -18,6 +24,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../navigation/types';
 import {useActiveSubs} from '../../store/products/products.selectors';
 
+const {width, height} = Dimensions.get('screen');
 const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
   const [text, setText] = useState<string>('');
   const [inputHeight, setInputHeight] = useState(50);
@@ -45,6 +52,10 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
     setShowModal(!showModal);
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   const change = (value: string) => {
     setText(value);
   };
@@ -54,8 +65,7 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
       (freeRequests && freeRequests > 0) ||
       (activeSubs &&
         activeSubs.length > 0 &&
-        activeSubs[activeSubs - 1].purchaseStateAndroid === 1
-      )
+        activeSubs[activeSubs.length - 1].purchaseStateAndroid === 1)
     ) {
       sendMessage(text);
       setText('');
@@ -115,6 +125,17 @@ const ChatInput = ({sendMessage}: {sendMessage: (T: string) => void}) => {
           )}
         </View>
       </View>
+      {showModal ? (
+        <TouchableOpacity
+          onPress={closeModal}
+          style={{
+            width: width,
+            height: height,
+            position: 'absolute',
+          }}
+        />
+      ) : null}
+
       <ChatModal detectTextFromPhoto={detectTextFromPhoto} show={showModal} />
     </>
   );

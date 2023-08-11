@@ -53,21 +53,35 @@ const PaymentSelector = ({
     <View style={styles.container}>
       <Animated.View style={[styles.list, {height: animHeight}]}>
         {Object.keys(subscribes).map(item => {
+          const detailPos = {
+            pos: 0,
+          };
+
+          if (subscribes[item].subscriptionOfferDetails.length > 1) {
+            detailPos.pos = 1;
+          }
+          const details =
+            subscribes[item].subscriptionOfferDetails[detailPos.pos];
+
           return (
             <PaymentItem
-              price={
-                subscribes[item].subscriptionOfferDetails[0].pricingPhases
-                  .pricingPhaseList[0].formattedPrice
+              price={`${
+                parseInt(
+                  details.pricingPhases.pricingPhaseList[0].priceAmountMicros,
+                  10,
+                ) / 1000000
+              }`}
+              moneyCode={
+                details.pricingPhases.pricingPhaseList[0].priceCurrencyCode
               }
               selected={selected.sku === subscribes[item].sku}
               onPress={() =>
                 setSelected({
-                  token:
-                    subscribes[item].subscriptionOfferDetails[0].offerToken,
+                  token: details.offerToken,
                   sku: subscribes[item].sku,
                 })
               }
-              token={subscribes[item].subscriptionOfferDetails[0].offerToken}
+              token={details.offerToken}
               name={subscribes[item].name || ''}
               period={subscribes[item].period}
             />

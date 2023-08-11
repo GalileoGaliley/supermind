@@ -38,6 +38,7 @@ const SecondPresentationMessagingScreen = () => {
         <Video
           style={styles.video}
           playInBackground={true}
+          muted={true}
           resizeMode="cover"
           source={chat}
           repeat={true}

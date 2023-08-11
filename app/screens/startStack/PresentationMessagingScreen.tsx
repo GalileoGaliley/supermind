@@ -39,6 +39,7 @@ const PresentationMessagingScreen = () => {
           style={styles.video}
           playInBackground={true}
           resizeMode="cover"
+          muted={true}
           source={chat}
           repeat={true}
         />

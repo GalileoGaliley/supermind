@@ -5,16 +5,21 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/types';
 
-const HeaderButton = () => {
+const BackButton = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
 
   return (
     <TouchableOpacity
-      style={{marginHorizontal: 10, transform: [{rotateZ: '180deg'}]}}
+      style={{
+        marginHorizontal: 10,
+        transform: [{rotateZ: '180deg'}],
+        height: 35,
+        width: 35,
+      }}
       onPress={() => navigation.goBack()}>
       <Chevron />
     </TouchableOpacity>
   );
 };
 
-export default HeaderButton;
+export default BackButton;

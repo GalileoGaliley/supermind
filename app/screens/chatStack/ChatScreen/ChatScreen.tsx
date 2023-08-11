@@ -53,7 +53,6 @@ const ChatScreen = () => {
   } = useRoute<RouteProp<RootStackParamsList, 'ChatScreen'>>();
 
   useEffect(() => {
-    console.log('lskdmfkldsfjksdfks dkjv k');
     dispatch(fillChat(data));
     if (data.messages?.length === 1 && data.messages[0].role === 'user') {
       dispatch(

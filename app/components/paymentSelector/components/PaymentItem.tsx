@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type OwnProps = {
   name: string;
+  moneyCode: string;
   price: string;
   period: string;
   token: string;
@@ -10,7 +11,19 @@ type OwnProps = {
   onPress: () => void;
 };
 
-const PaymentItem = ({name, price, period, onPress, selected}: OwnProps) => {
+const PaymentItem = ({
+  name,
+  price,
+  period,
+  onPress,
+  selected,
+  moneyCode,
+}: OwnProps) => {
+  const periods: {[p: string]: number} = {
+    week: 1,
+    month: 4,
+    year: 52,
+  };
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -25,13 +38,14 @@ const PaymentItem = ({name, price, period, onPress, selected}: OwnProps) => {
         <View style={{flexDirection: 'column'}}>
           <Text style={[styles.text, {fontWeight: '300'}]}>{name}</Text>
           <Text style={styles.text}>
-            {price}/{period}
+            {`${price} ${moneyCode}`}/{period}
           </Text>
         </View>
       </View>
       <View>
         <Text style={[styles.text, {marginRight: 16, fontSize: 11}]}>
-          {price}/week
+          {parseInt(String(parseInt(price, 10) / periods[period]), 10)}{' '}
+          {moneyCode}/week
         </Text>
       </View>
     </TouchableOpacity>

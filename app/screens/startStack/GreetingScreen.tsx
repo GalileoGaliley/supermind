@@ -59,6 +59,7 @@ const GreetingScreen = () => {
             style={styles.video}
             playInBackground={true}
             resizeMode="cover"
+            muted={true}
             source={robot}
             repeat={true}
           />

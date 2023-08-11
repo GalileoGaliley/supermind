@@ -24,20 +24,20 @@ import {
 } from '../../store/products/products.slice';
 import {useDispatch} from 'react-redux';
 
+export const openLink = (routeTo: string) => {
+  Linking.canOpenURL(routeTo)
+    .then(supported => {
+      if (!supported) {
+        console.log('Что-то не так');
+      } else {
+        return Linking.openURL(routeTo);
+      }
+    })
+    .catch(error => console.error('Ошибка при открытии ссылки: ', error));
+};
+
 const SettingsScreen = () => {
   const dispatch = useDispatch();
-
-  const openLink = (routeTo: string) => {
-    Linking.canOpenURL(routeTo)
-      .then(supported => {
-        if (!supported) {
-          console.log('Что-то не так');
-        } else {
-          return Linking.openURL(routeTo);
-        }
-      })
-      .catch(error => console.error('Ошибка при открытии ссылки: ', error));
-  };
 
   const share = () => {
     Share.share({

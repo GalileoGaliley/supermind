@@ -26,7 +26,7 @@ export const promptsList = [
     title: 'Creativity',
     firstEmoji: '🎨',
     secondEmoji: '🎙️',
-    firstPrompt: 'Generate atr',
+    firstPrompt: 'Generate art',
     secondPrompt: 'Write song',
   },
   {

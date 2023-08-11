@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">supermind</string>
+    <string name="facebook_app_id">556686643104464</string>
+    <string name="facebook_client_token">e9df2dba8ddb41697c7d2df8dba809e4</string>
 </resources>

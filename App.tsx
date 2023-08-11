@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 
@@ -13,7 +13,7 @@ import Qonversion, {
 
 function App(): JSX.Element {
   const config = new QonversionConfigBuilder(
-    'IhXFbv6Jz-_qZ_NYYbcwpgHvoAuN1A5U',
+    'lFBiIW5rn7pF504WyEDpezmu2hqT-4Uk',
     LaunchMode.ANALYTICS,
   ).build();
   Qonversion.initialize(config);

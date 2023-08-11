@@ -6,6 +6,7 @@ import type {StackNavigationOptions} from '@react-navigation/stack';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {createRef, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 import {fetchSignInAction} from '../store/user/user.actions';
 
@@ -28,7 +29,10 @@ import {
   setLoading,
 } from '../store/products/products.slice';
 import RNDeviceInfo from 'react-native-device-info';
-import {useProductsLoading} from '../store/products/products.selectors';
+import {
+  useProductsLoading,
+  useActiveSubs,
+} from '../store/products/products.selectors';
 import SplashComponent from '../components/splashComponent/SplashComponent';
 import SplashScreen from 'react-native-splash-screen';
 // import {useFirebase} from 'common/types/hooks/useFirebase';
@@ -41,6 +45,7 @@ const RootNavigation = () => {
   const dispatch = useDispatch();
   const DI = RNDeviceInfo.getDeviceId();
   const loading = useProductsLoading();
+  const activeSubs = useActiveSubs();
 
   const getProd = async () => {
     const connected = await initConnection();
@@ -58,7 +63,7 @@ const RootNavigation = () => {
       await dispatch(addProductsAction(subs));
 
       const activeSub = await getAvailablePurchases();
-      dispatch(setLoading(false));
+      await dispatch(setLoading(false));
       if (activeSub.length) {
         await dispatch(addActiveSubsAction(activeSub));
       }
@@ -68,6 +73,7 @@ const RootNavigation = () => {
   useEffect(() => {
     getProd();
     SplashScreen.hide();
+    changeNavigationBarColor('#1c1c23');
   }, []);
 
   useEffect(() => {
@@ -101,9 +107,15 @@ const RootNavigation = () => {
   if (loading) {
     return <SplashComponent />;
   }
+
+  const isActiveSubs =
+    activeSubs &&
+    activeSubs.length > 0 &&
+    activeSubs[activeSubs.length - 1].purchaseStateAndroid === 1;
+
   return (
     <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator initialRouteName="Start">
+      <RootStack.Navigator initialRouteName={isActiveSubs ? 'Tabs' : 'Start'}>
         <RootStack.Screen
           name="Tabs"
           component={TabNavigation}

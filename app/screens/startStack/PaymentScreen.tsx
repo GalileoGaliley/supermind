@@ -6,8 +6,9 @@ import {
   View,
   Animated,
   Text,
-  TouchableOpacity, Share
-} from "react-native";
+  TouchableOpacity,
+} from 'react-native';
+import {AppEventsLogger} from 'react-native-fbsdk-next';
 import Video from 'react-native-video';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,15 +22,23 @@ import Chevron from '../../assets/images/icons/Chevron';
 import PaymentPrompts from '../../components/paymentPrompts/PaymentPrompts';
 import PaymentSelector from '../../components/paymentSelector/PaymentSelector';
 import {
+  useActiveSubs,
   useSubsCount,
   useSubscribes,
 } from '../../store/products/products.selectors';
-import {requestSubscription} from 'react-native-iap';
+import {getAvailablePurchases, requestSubscription} from 'react-native-iap';
 import {CloseCrossIcon} from '../../assets/images/icons/IconPack';
+import {openLink} from '../customStack/SettingsScreen';
+import {
+  addActiveSubsAction,
+  setLoading,
+} from '../../store/products/products.slice';
+import {useDispatch} from 'react-redux';
 
 const {width, height} = Dimensions.get('window');
 
 const PaymentScreen = () => {
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState({token: '', sku: ''});
   const [showOptions, setShowOptions] = useState(false);
 
@@ -38,6 +47,7 @@ const PaymentScreen = () => {
 
   const countElem = useSubsCount();
   const subscribes = useSubscribes();
+  const activeSubs = useActiveSubs();
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamsList>>();
   const videoRef = useRef<Video>(null);
@@ -67,10 +77,31 @@ const PaymentScreen = () => {
     const data = await requestSubscription({
       subscriptionOffers: [{offerToken: selected.token, sku: selected.sku}],
     });
-    if (data) {
-      await Share.share({
-        message: JSON.stringify(data),
-      });
+    // @ts-ignore
+    if (data && data[0].purchaseStateAndroid === 1) {
+      const subData =
+        // @ts-ignore
+        subscribes[data[0].productIds[0]].subscriptionOfferDetails[0]
+          .pricingPhases.pricingPhaseList;
+      const trialUsed = activeSubs.find(
+        (item: any) => item.productId === 'org.super_mind.premium.1week.offer',
+      );
+      if (trialUsed) {
+        await AppEventsLogger.logPurchase(
+          parseInt(subData[0].priceAmountMicros, 10) / 1000000,
+          subData[0].priceCurrencyCode,
+        );
+      } else if (selected.sku === 'org.super_mind.premium.1week.offer') {
+        await AppEventsLogger.logEvent('Trial started', {
+          currency: subData[0].priceCurrencyCode,
+        });
+      } else {
+        await AppEventsLogger.logPurchase(
+          parseInt(subData[0].priceAmountMicros, 10) / 1000000,
+          subData[0].priceCurrencyCode,
+        );
+      }
+      await navigation.navigate('Tabs');
     }
   };
 
@@ -153,17 +184,54 @@ const PaymentScreen = () => {
             Icon={<Chevron />}
             title={
               selected.sku === 'org.super_mind.premium.1week.offer'
-                ? 'Try for free'
+                ? 'Try for Free'
                 : 'Continue'
             }
           />
           {/*<Button onPress={pressed} Icon={<Chevron />} title={'CONtinuE'} />*/}
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            backgroundColor: '#23232D',
+          }}>
+          <TouchableOpacity
+            onPress={() =>
+              openLink('https://appmediaco.com/SuperMindTermsOfUse.html')
+            }
+            style={styles.bottomLinks}>
+            <Text style={{textAlign: 'center', fontSize: 11}}>EULA</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              openLink('https://appmediaco.com/SuperMindPolicy.html')
+            }
+            style={styles.bottomLinks}>
+            <Text style={{textAlign: 'center', fontSize: 11}}>Policy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={async () => {
+              const activeSub = await getAvailablePurchases();
+              if (activeSub.length) {
+                await dispatch(addActiveSubsAction(activeSub));
+              }
+            }}
+            style={styles.bottomLinks}>
+            <Text style={{textAlign: 'center', fontSize: 11}}>
+              Restore purchases
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.videoContainer}>
           <Video
             style={styles.video}
             playInBackground={true}
             resizeMode="cover"
+            muted={true}
             source={robot}
             repeat={true}
           />
@@ -238,6 +306,11 @@ const styles = StyleSheet.create({
     right: 30,
     top: 70,
     zIndex: 99,
+  },
+  bottomLinks: {
+    width: '33.3%',
+    height: 25,
+    justifyContent: 'center',
   },
 });
 
