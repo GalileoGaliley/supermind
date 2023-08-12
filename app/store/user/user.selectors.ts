@@ -18,6 +18,8 @@ const useFreeRequests = () =>
     }) => freeRequest,
   );
 
+const useIsEntered = () => useAppSelector(({user: {isEntered}}) => isEntered);
+
 const useUserLoading = () => useAppSelector(({user: {loading}}) => loading);
 
-export {useUserToken, useUserLoading, useFreeRequests};
+export {useUserToken, useIsEntered, useUserLoading, useFreeRequests};

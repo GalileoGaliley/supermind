@@ -73,7 +73,7 @@ const ChatScreen = () => {
     <View
       style={{
         backgroundColor: '#16171D',
-        height: isKeyboardVisible ? height - keyHeight : height,
+        height: '100%',
         position: 'relative',
       }}>
       <View style={{height: 80}} />

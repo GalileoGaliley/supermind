@@ -34,8 +34,9 @@ import {
   setLoading,
 } from '../../store/products/products.slice';
 import {useDispatch} from 'react-redux';
+import { setIsEntered } from "../../store/user/user.slice";
 
-const {width, height} = Dimensions.get('window');
+const {width, height} = Dimensions.get('screen');
 
 const PaymentScreen = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const PaymentScreen = () => {
   const videoRef = useRef<Video>(null);
 
   useEffect(() => {
+    dispatch(setIsEntered(true));
     if (videoRef.current) {
       videoRef.current.seek(0);
       // @ts-ignore
@@ -111,7 +113,7 @@ const PaymentScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.cross} onPress={pressed}>
         <CloseCrossIcon />
       </TouchableOpacity>
@@ -169,7 +171,7 @@ const PaymentScreen = () => {
                 textAlign: 'center',
                 marginTop: 10,
               }}>
-              Try 3 days free, then $5,99/week {'\n'}
+              Try 3 days free, then $6,99/week {'\n'}
               Auto-renewable. Cancel anytime.
             </Text>
           </Animated.View>
@@ -189,7 +191,6 @@ const PaymentScreen = () => {
                 : 'Continue'
             }
           />
-          {/*<Button onPress={pressed} Icon={<Chevron />} title={'CONtinuE'} />*/}
         </View>
         <View
           style={{
@@ -205,14 +206,28 @@ const PaymentScreen = () => {
               openLink('https://appmediaco.com/SuperMindTermsOfUse.html')
             }
             style={styles.bottomLinks}>
-            <Text style={{textAlign: 'center', fontSize: 11}}>EULA</Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 11,
+                color: 'rgba(105, 115, 123, 1)',
+              }}>
+              EULA
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               openLink('https://appmediaco.com/SuperMindPolicy.html')
             }
             style={styles.bottomLinks}>
-            <Text style={{textAlign: 'center', fontSize: 11}}>Policy</Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 11,
+                color: 'rgba(105, 115, 123, 1)',
+              }}>
+              Policy
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={async () => {
@@ -222,7 +237,12 @@ const PaymentScreen = () => {
               }
             }}
             style={styles.bottomLinks}>
-            <Text style={{textAlign: 'center', fontSize: 11}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 11,
+                color: 'rgba(105, 115, 123, 1)',
+              }}>
               Restore purchases
             </Text>
           </TouchableOpacity>
@@ -238,13 +258,14 @@ const PaymentScreen = () => {
           />
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    height: height,
     flex: 1,
   },
   titleContainer: {
@@ -300,7 +321,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#16171d',
     paddingTop: 42,
-    height: height,
+    height: '100%',
   },
   cross: {
     position: 'absolute',

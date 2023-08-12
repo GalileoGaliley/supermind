@@ -67,6 +67,7 @@ const ChatModal = ({show, detectTextFromPhoto}: OwnProps) => {
 
   return (
     <Animated.View style={[styles.modalContainer, {bottom: animatedPos}]}>
+      <BlurView style={styles.absolute} blurType="dark" blurRadius={3} />
       <TouchableOpacity onPress={openCamera} style={styles.modalItem}>
         <View style={styles.iconContainer}>
           <LinearGradient
@@ -91,13 +92,15 @@ const ChatModal = ({show, detectTextFromPhoto}: OwnProps) => {
         </View>
         <Text style={styles.title}>Gallery</Text>
       </TouchableOpacity>
-      <BlurView style={styles.absolute} blurType="dark" blurRadius={3} />
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   modalContainer: {
+    borderColor: '#183716',
+    borderStyle: 'solid',
+    borderWidth: 1,
     flexDirection: 'column',
     backgroundColor: 'rgba(20, 20, 20, 0.5)',
     position: 'absolute',
@@ -109,6 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     left: 10,
     zIndex: 0,
+    overflow: 'hidden',
   },
   absolute: {
     position: 'absolute',
@@ -116,9 +120,10 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    width: 150,
-    height: 130,
-    zIndex: -1,
+    width: 150 - 1,
+    height: 130 - 1,
+    borderRadius: 100000,
+    zIndex: -50,
   },
   modalItem: {
     flexDirection: 'row',

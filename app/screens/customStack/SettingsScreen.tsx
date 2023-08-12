@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Share,
   Linking,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -18,26 +19,30 @@ import {
   SubtractIcon,
 } from '../../assets/images/icons/IconPack';
 import {getAvailablePurchases} from 'react-native-iap';
-import {
-  addActiveSubsAction,
-  setLoading,
-} from '../../store/products/products.slice';
+import {addActiveSubsAction} from '../../store/products/products.slice';
 import {useDispatch} from 'react-redux';
 
-export const openLink = (routeTo: string) => {
-  Linking.canOpenURL(routeTo)
-    .then(supported => {
-      if (!supported) {
-        console.log('Что-то не так');
-      } else {
-        return Linking.openURL(routeTo);
-      }
-    })
-    .catch(error => console.error('Ошибка при открытии ссылки: ', error));
+export const openLink = async (routeTo: string) => {
+  try {
+    await Linking.openURL(routeTo);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const SettingsScreen = () => {
+  const errorModalText = {
+    title: 'Ошибка',
+    message: 'Не удалось обнаружить подписки',
+  };
+
+  const successModalText = {
+    title: 'Успешно',
+    message: 'Активная подписка обнаружена',
+  };
+
   const dispatch = useDispatch();
+  const [modalText, setModalText] = useState(errorModalText);
 
   const share = () => {
     Share.share({
@@ -86,16 +91,32 @@ const SettingsScreen = () => {
     {
       title: 'Restore Purchase',
       callback: async () => {
-        dispatch(setLoading(true));
         const activeSub = await getAvailablePurchases();
-        dispatch(setLoading(false));
         if (activeSub.length) {
+          setModalText(successModalText);
           await dispatch(addActiveSubsAction(activeSub));
+        } else {
+          setModalText(errorModalText);
+          showModal();
         }
       },
       Icon: () => <RestoreIcon />,
     },
   ];
+
+  const showModal = () => {
+    Alert.alert(
+      modalText.title,
+      modalText.message,
+      [
+        {
+          text: 'ОК',
+          onPress: () => console.log('ОК нажата'),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   const SettingItem = ({Icon, title, callback}: (typeof settingData)[0]) => (
     <TouchableOpacity style={styles.settingItem} onPress={callback}>
@@ -113,15 +134,17 @@ const SettingsScreen = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
-      {settingData.map(item => (
-        <SettingItem
-          title={item.title}
-          Icon={item.Icon}
-          callback={item.callback}
-        />
-      ))}
-    </ScrollView>
+    <>
+      <ScrollView style={styles.container}>
+        {settingData.map(item => (
+          <SettingItem
+            title={item.title}
+            Icon={item.Icon}
+            callback={item.callback}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ type UserReqData = {
 type UserState = {
   user: Partial<User>;
   loading: boolean;
+  isEntered: boolean;
 };
 
 export type {User, UserState, UserReqData};

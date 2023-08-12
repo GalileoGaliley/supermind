@@ -6,12 +6,15 @@ import React from 'react';
 // import {useUserToken} from 'store/user/user.selectors';
 import GreetingScreen from '../screens/startStack/GreetingScreen';
 import PresentationScreen from '../screens/startStack/PresentationScreen';
-import PresentationMessagingScreen from "../screens/startStack/PresentationMessagingScreen";
-import SecondPresentationMessagingScreen from "../screens/startStack/SecondPresentationMessagingScreen";
-import PaymentScreen from "../screens/startStack/PaymentScreen";
+import PresentationMessagingScreen from '../screens/startStack/PresentationMessagingScreen';
+import SecondPresentationMessagingScreen from '../screens/startStack/SecondPresentationMessagingScreen';
+import PaymentScreen from '../screens/startStack/PaymentScreen';
+import {useIsEntered} from '../store/user/user.selectors';
 
 const StartNavigation = () => {
   const StartStack = createStackNavigator<StartTabsParamsList>();
+
+  const entered = useIsEntered();
 
   // const token = useUserToken();
   const getBaseNavigatorOptions = ({
@@ -22,9 +25,8 @@ const StartNavigation = () => {
   }: BaseNavigationOptionParams): StackNavigationOptions => {
     const isRouteIncluded = routeNames.includes(name);
     return {
-      headerMode: 'float',
-      cardShadowEnabled: true,
-      cardOverlayEnabled: true,
+      // cardShadowEnabled: true,
+      // cardOverlayEnabled: true,
       cardStyleInterpolator: ({current, layouts}) => {
         return {
           cardStyle: {
@@ -44,6 +46,7 @@ const StartNavigation = () => {
 
   return (
     <StartStack.Navigator
+      initialRouteName={entered ? 'PaymentScreen' : 'GreetingScreen'}
       screenOptions={params =>
         getBaseNavigatorOptions({
           navigatorParams: params,
@@ -52,6 +55,7 @@ const StartNavigation = () => {
             'PresentationScreen',
             'PresentationMessagingScreen',
             'SecondPresentationMessagingScreen',
+            'PaymentScreen',
           ],
         })
       }>

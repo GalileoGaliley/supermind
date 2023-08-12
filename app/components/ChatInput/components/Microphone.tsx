@@ -102,7 +102,7 @@ const Microphone = ({change, setStopped, stopped}: OwnProps) => {
     <View style={[styles.microphoneContainer]}>
       <AnimatedTouchable
         onPressOut={stopRecognizing}
-        onLongPress={startRecognizing}
+        onPressIn={startRecognizing}
         style={[
           {
             width: animatedSize,

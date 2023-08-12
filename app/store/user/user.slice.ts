@@ -7,6 +7,7 @@ import type {UserState} from './user.types';
 
 const initialState: UserState = {
   user: {},
+  isEntered: false,
   loading: false,
 };
 
@@ -18,6 +19,9 @@ const userSlice = createSlice({
       if (state.user.freeRequest) {
         state.user.freeRequest = state.user.freeRequest - 1;
       }
+    },
+    setIsEntered: (state, {payload}: {payload: boolean}) => {
+      state.isEntered = payload;
     },
   },
   extraReducers: builder => {
@@ -39,4 +43,4 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const {changeFreeRequest} = userSlice.actions;
+export const {changeFreeRequest, setIsEntered} = userSlice.actions;

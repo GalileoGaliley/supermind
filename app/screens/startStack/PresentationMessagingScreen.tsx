@@ -90,9 +90,11 @@ const styles = StyleSheet.create({
     zIndex: -1,
     top: 0,
     left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   video: {
-    width: '100%',
+    width: '105%',
     height: '100%',
   },
   image: {

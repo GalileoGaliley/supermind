@@ -32,7 +32,7 @@ const GreetingScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         colors={['#16171D', '#16171D', 'transparent', '#16171D', '#16171D']}
         style={styles.gradient}
@@ -65,14 +65,13 @@ const GreetingScreen = () => {
           />
         </View>
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
-    flex: 1,
+    height: '100%',
   },
   titleContainer: {
     width: '100%',
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#16171d',
     paddingTop: 42,
-    height: height,
+    height: '100%',
   },
 });
 
