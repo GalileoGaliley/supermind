@@ -34,7 +34,8 @@ import {
   setLoading,
 } from '../../store/products/products.slice';
 import {useDispatch} from 'react-redux';
-import { setIsEntered } from "../../store/user/user.slice";
+import {setIsEntered} from '../../store/user/user.slice';
+import {currencySymbols} from '../../store/enums';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -112,6 +113,14 @@ const PaymentScreen = () => {
     navigation.navigate('Tabs');
   };
 
+  const details =
+    subscribes[Object.keys(subscribes)[0]].subscriptionOfferDetails[0];
+
+  const currSymbol: string =
+    currencySymbols[
+      details.pricingPhases.pricingPhaseList[0].priceCurrencyCode
+    ];
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.cross} onPress={pressed}>
@@ -171,7 +180,13 @@ const PaymentScreen = () => {
                 textAlign: 'center',
                 marginTop: 10,
               }}>
-              Try 3 days free, then $6,99/week {'\n'}
+              Try 3 days free, then{' '}
+              {`${currSymbol}${
+                // @ts-ignore
+                details.pricingPhases.pricingPhaseList[1].priceAmountMicros /
+                1000000
+              }`}
+              /week {'\n'}
               Auto-renewable. Cancel anytime.
             </Text>
           </Animated.View>

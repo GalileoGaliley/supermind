@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PaymentItem from './components/PaymentItem';
 import {SubData} from '../../store/products/products.types';
+import {currencySymbols} from '../../store/enums';
 
 type OwnProps = {
   setShowOptions: (T: boolean) => void;
@@ -49,6 +50,14 @@ const PaymentSelector = ({
     }
   }, []);
 
+  const details =
+    subscribes[Object.keys(subscribes)[0]].subscriptionOfferDetails[0];
+
+  const currSymbol: string =
+    currencySymbols[
+      details.pricingPhases.pricingPhaseList[0].priceCurrencyCode
+    ];
+
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.list, {height: animHeight}]}>
@@ -60,7 +69,8 @@ const PaymentSelector = ({
           if (subscribes[item].subscriptionOfferDetails.length > 1) {
             detailPos.pos = 1;
           }
-          const details =
+
+          const detail =
             subscribes[item].subscriptionOfferDetails[detailPos.pos];
 
           return (
@@ -69,20 +79,22 @@ const PaymentSelector = ({
               showOptions={showOptions}
               price={
                 // @ts-ignore
-                details.pricingPhases.pricingPhaseList[0].priceAmountMicros /
+                detail.pricingPhases.pricingPhaseList[0].priceAmountMicros /
                 1000000
               }
               moneyCode={
-                details.pricingPhases.pricingPhaseList[0].priceCurrencyCode
+                currSymbol
+                  ? currSymbol
+                  : detail.pricingPhases.pricingPhaseList[0].priceCurrencyCode
               }
               selected={selected.sku === subscribes[item].sku}
               onPress={() =>
                 setSelected({
-                  token: details.offerToken,
+                  token: detail.offerToken,
                   sku: subscribes[item].sku,
                 })
               }
-              token={details.offerToken}
+              token={detail.offerToken}
               name={subscribes[item].name || ''}
               period={subscribes[item].period}
             />
