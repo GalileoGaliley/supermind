@@ -51,7 +51,7 @@ const PaymentSelector = ({
   }, []);
 
   const details =
-    subscribes[Object.keys(subscribes)[0]].subscriptionOfferDetails[0];
+    subscribes[Object.keys(subscribes)[0]]?.subscriptionOfferDetails[0];
 
   const currSymbol: string =
     currencySymbols[
@@ -61,45 +61,46 @@ const PaymentSelector = ({
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.list, {height: animHeight}]}>
-        {Object.keys(subscribes).map((item, index) => {
-          const detailPos = {
-            pos: 0,
-          };
+        {subscribes &&
+          Object.keys(subscribes).map((item, index) => {
+            const detailPos = {
+              pos: 0,
+            };
 
-          if (subscribes[item].subscriptionOfferDetails.length > 1) {
-            detailPos.pos = 1;
-          }
+            if (subscribes[item].subscriptionOfferDetails.length > 1) {
+              detailPos.pos = 1;
+            }
 
-          const detail =
-            subscribes[item].subscriptionOfferDetails[detailPos.pos];
+            const detail =
+              subscribes[item].subscriptionOfferDetails[detailPos.pos];
 
-          return (
-            <PaymentItem
-              index={index}
-              showOptions={showOptions}
-              price={
-                // @ts-ignore
-                detail.pricingPhases.pricingPhaseList[0].priceAmountMicros /
-                1000000
-              }
-              moneyCode={
-                currSymbol
-                  ? currSymbol
-                  : detail.pricingPhases.pricingPhaseList[0].priceCurrencyCode
-              }
-              selected={selected.sku === subscribes[item].sku}
-              onPress={() =>
-                setSelected({
-                  token: detail.offerToken,
-                  sku: subscribes[item].sku,
-                })
-              }
-              token={detail.offerToken}
-              name={subscribes[item].name || ''}
-              period={subscribes[item].period}
-            />
-          );
-        })}
+            return (
+              <PaymentItem
+                index={index}
+                showOptions={showOptions}
+                price={
+                  // @ts-ignore
+                  detail.pricingPhases.pricingPhaseList[0].priceAmountMicros /
+                  1000000
+                }
+                moneyCode={
+                  currSymbol
+                    ? currSymbol
+                    : detail.pricingPhases.pricingPhaseList[0].priceCurrencyCode
+                }
+                selected={selected.sku === subscribes[item].sku}
+                onPress={() =>
+                  setSelected({
+                    token: detail.offerToken,
+                    sku: subscribes[item].sku,
+                  })
+                }
+                token={detail.offerToken}
+                name={subscribes[item].name || ''}
+                period={subscribes[item].period}
+              />
+            );
+          })}
       </Animated.View>
       <TouchableOpacity
         style={styles.moreOptionButton}

@@ -183,7 +183,7 @@ const PaymentScreen = () => {
               Try 3 days free, then{' '}
               {`${currSymbol}${
                 // @ts-ignore
-                details.pricingPhases.pricingPhaseList[1].priceAmountMicros /
+                details?.pricingPhases?.pricingPhaseList[1].priceAmountMicros /
                 1000000
               }`}
               /week {'\n'}
